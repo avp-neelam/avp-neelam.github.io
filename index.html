@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;">
+    <link rel="icon" type="image/png" href="./src/seal.png">
+    
+    <title>AVP Neelam</title>
+
+    <link rel="stylesheet" href="node_modules/slider.css">
+
+    <!-- LaTeX CSS & MathJax Support -->
+    <link rel="stylesheet" href="node_modules/latex.css/style.css">
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+<body>
+
+    <header>
+        <table style="width:100%">
+            <tbody>
+                <tr>
+                    <td> <a href="./photos/WV.jpeg"><img src="./photos/WV.jpeg" width="220" height="300"></a> </td>
+                    <td align="left" ,="" style="vertical-align: top;">
+                            
+                            <h2>Neelam Venkata Prasad Akula</h2>
+                            Graduate Student<br>
+                            University of Texas at Dallas<br>
+                            School of Natural Sciences and Mathematics, FN32<br>
+                            800 W. Campbell Rd.<br>
+                            Richardson, TX 75080-3021<br>
+                            <br>
+                            <b>Office:</b> BE 3.302B<br>
+                            <br>
+                            <b>E-mail:</b> neelam[dot]akula[at]utdallas[dot]edu<br>
+                            <br>
+                            <label class="switch">
+                                <input type="checkbox" id="dark-mode-on">
+                                <span class="slider round"></span>
+                            </label>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </header>
+    
+    <br>
+
+    I am a graduate student studying mathematics at the <a href="https://math.utdallas.edu/">University of Texas at Dallas</a>, where I am advised by <a href="https://personal.utdallas.edu/~coskunuz/">Baris Coskunuzer</a>.<br>
+    A copy of my CV can be found <a href="./src/CV.pdf">here</a>.<br>
+    Previously, I was an undergradute at the <a href="https://www-math.umd.edu/">University of Maryland</a> from 2019 to 2023 where I was advised by <a href="https://www.math.umd.edu/~amingh">Amin Gholampour</a>.<br>
+
+    <p class="indent-pars">
+        <h3>Research:</h3>
+        My current research interests center around topological machine learning.<br>
+        <br>
+        Previously, my research centered around quivers, particularly moduli space of quiver representations and Auslander-Reiten theory.<br>
+        My undergraduate thesis: <i><a href="./src/quiver-AR-theory.pdf">Quiver Representations and Auslander-Reiten Theory</a></i>.<br>
+        <br>
+        I hold novel interest in computational systems such as <a href="https://www.gap-system.org/">GAP</a> and <a href="http://www2.macaulay2.com/Macaulay2/">Macaulay2</a>.<br>
+        <br>
+        I have been a participant in REU sites: in <a href="./photos/reu22.png">Summer 2022</a> (finite group and representation theory); and previously in Summer 2021 (machine learning).<br>
+    </p>
+
+    <!-- <article class="indent-pars">
+        <h3>Papers & Publications:</h3>
+        <ul>
+            <li>N.V.P. Akula, <a href="./papers/knitting-alg.pdf"><i>The knitting algorithm for AD type quivers</i></a>, (preprint) 2023</li>
+            <li>N.V.P. Akula, <a href="./papers/gabriels-theorem.pdf"><i>A proof of Gabriel's theorem</i></a>, 2022</li>
+            <li>N.V.P.  Akula, <a href="./papers/decimal-expansions.pdf"><i>On Decimal Expansions of Rational Numbers</i></a>, DRP 2021</li>
+        </ul>
+    </article> -->
+
+    <article class="indent-pars">
+        <h3>Lecture Notes/Expository Papers:</h3>
+        <ul>
+            <li><a href="./notes/weak-solutions.pdf">Weak Solutions and the Rankine-Hugoniot Condition</a></li>
+            <li><a href="./notes/quiver_notes.pdf">Quiver Representations</a></li>
+            <li><a href="./notes/knitting-alg.pdf">The knitting algorithm for AD type quivers</a></li>
+            <li><a href="./notes/gabriels-theorem.pdf">A proof of Gabriel's theorem</a></li>
+            <li><a href="./notes/decimal-expansions.pdf">On Decimal Expansions of Rational Numbers</a></li>
+        </ul>
+    </article>
+
+    <article class="indent-pars">
+        <h3>Teaching:</h3>
+        <ul>
+            <li>MATH2418 Linear Algebra (UTD), Spring 2025</li>
+            <li>MATH2418 Linear Algebra (UTD), Fall 2024</li>
+            <li>MATH2414 Integral Calculus (UTD), Spring 2024</li>
+            <li>MATH2418 Linear Algebra (UTD), Fall 2023</li>
+            <li>Selected Topics in Mathematics;  <a href="./teaching/299Q/index.html">Quiver Representations</a> (UMD), Spring 2023</li>
+        </ul>
+    </article>
+
+    <article class="indent-pars">
+        <h3>Miscellaneous:</h3>
+        <ul>
+            <li><a href="https://mathshistory.st-andrews.ac.uk/">MacTutor</a> - A compendium of mathematical history and biographies.</li>
+            <li>Free <a href="https://cain.math.gatech.edu/textbooks/onlinebooks.html">textbooks</a> for a variety of mathematical topics.</li>
+            <li>Keith Conrad's <a href="https://kconrad.math.uconn.edu/blurbs/">expository papers</a>.</li>
+            <li>A <a href="https://www.forkinganddividing.com/">map of the universe</a>.</li>
+        </ul>
+    </article>
+
+    <hr>
+    <footer>
+        <small><i>Last updated: <script>document.write(document.lastModified);</script></i></small>
+    </footer>
+
+    <script>
+        function enableDarkMode() {
+	        document.body.classList.add('latex-dark');
+	        localStorage.setItem('theme', 'dark');
+        }
+
+        function disableDarkMode() {
+	        document.body.classList.remove('latex-dark');
+	        localStorage.setItem('theme', 'light');
+        }
+
+        function detectColorScheme() {
+	        let theme = 'light';
+
+	        if (localStorage.getItem('theme')) {
+		        theme = localStorage.getItem('theme');
+	        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+		        heme = 'dark';
+	        }
+
+	        theme === 'dark' ? enableDarkMode() : disableDarkMode();
+        }
+
+        detectColorScheme();
+
+        document.getElementById('dark-mode-on').addEventListener('click', () => {
+	        localStorage.getItem('theme') === 'light' ? enableDarkMode() : disableDarkMode();
+        });
+    </script>
+
+</body>
+
+</html>
