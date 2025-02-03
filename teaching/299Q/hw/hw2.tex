@@ -1,0 +1,84 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{mathtools}
+\usepackage{stmaryrd}
+\usepackage[alphabetic]{amsrefs}
+\usepackage{amsfonts, amsmath, amsthm, amssymb}
+\usepackage[margin=1.5in]{geometry}
+\usepackage[colorlinks]{hyperref}
+\usepackage[table]{xcolor}
+\usepackage{tikz}\usetikzlibrary{cd}
+\usepackage{enumerate}
+
+% env style
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[section]
+\newtheorem*{thm*}{Theorem}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{conjecture}[thm]{Conjecture}
+\newtheorem{prob}{Problem}
+\newtheorem{example}[definition]{Example}
+\newtheorem{xca}[definition]{Exercise}
+\theoremstyle{remark}
+\newtheorem{remark}[thm]{\bf Remark}
+\newtheorem{tab}[thm]{\bf Table}
+\newtheorem*{note}{Note}
+
+\numberwithin{equation}{section}
+
+% custom macros
+\def\R{{\mathbb R}}
+\def\N{{\mathbb N}}
+\def\C{{\mathbb C}}
+\def\Q{{\mathbb Q}}
+\def\k{k}
+\def\O{\mathcal{O}}
+\def\sheaf#1{\mathcal{#1}}
+
+\def\GAP{\textsc{Gap}}
+\def\gap{\color{blue}gap> }
+\def\QPA{\textsc{Qpa}}
+\def\Magma{\textsc{Magma}}
+
+\newcommand{\cat}{{\mathcal C}}
+\newcommand{\Ob}{\text{Ob}}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\coker}{coker}
+\renewcommand{\hom}{\textup{Hom}}
+\DeclareMathOperator{\ext}{Ext}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\rep}{rep}
+\DeclareMathOperator{\SET}{\mathbf{Set}}
+\DeclareMathOperator{\CAT}{\mathbf{Cat}}
+\DeclareMathOperator{\QUIV}{\mathbf{Quiv}}
+\newcommand{\dimvec}[3]{\begin{smallmatrix}#1\\#2\\#3\end{smallmatrix}}
+
+
+\title{MATH 299Q: Homework 2\\{\Large Quiver Representations}}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+% Let $\k$ be an algebraically closed field.
+
+\begin{enumerate}[1.]
+    \item Prove the First Isomorphism Theorem (for quiver representations).
+    \begin{thm*}
+        Let $Q$ be a quiver with representations $M$ and $N$. If $f:M\to N$ is a morphism of representations then
+        \[\im f\cong M/\ker f.\]
+    \end{thm*}
+    \vfill
+    \item Given the following quiver, construct a short exact sequence of representations.
+    \[Q:\begin{tikzcd}1\arrow[rr]&&2\end{tikzcd}\]
+    [\textit{Hint: Find indecomposable representations.}]
+    \vfill
+\end{enumerate}
+
+\end{document}

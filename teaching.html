@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;">
+    <link rel="icon" type="image/png" href="./src/seal.png">
+    
+    <title>AVP Neelam</title>
+
+    <link rel="stylesheet" href="./src/slider.css">
+
+    <!-- LaTeX CSS & MathJax Support -->
+    <link rel="stylesheet" href="./src/style.css">
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+<body>
+
+    <header>
+        <!-- <table style="width:100%">
+            <tbody>
+                <tr>
+                    <td> 
+                        <a href="./photos/WV.jpeg"><img src="./photos/WV.jpeg" width="220" height="300"></a>
+                    </td>
+                    <td align="left", ="" style="vertical-align: top;">
+                            <h2>Neelam Akula</h2>
+                            Graduate Student<br>
+                            University of Texas at Dallas<br>
+                            School of Natural Sciences and Mathematics, FN32<br>
+                            800 W. Campbell Rd.<br>
+                            Richardson, TX 75080-3021<br>
+                            <br>
+                            <b>Office:</b> BE 3.302B<br>
+                            <br>
+                            <b>E-mail:</b> neelam[dot]akula[at]utdallas[dot]edu<br>
+                            <br>
+                            <label class="switch">
+                                <input type="checkbox" id="dark-mode-on">
+                                <span class="slider round"></span>
+                            </label>
+                    </td>
+                    <td align="right", ="" style="vertical-align: top;">
+                        <a href="./photos/chinnu.JPG"><img src="./photos/chinnu.JPG" width="220" height="300"></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table> -->
+
+        <h1>Neelam Akula</h1>
+        <div class="headshot">
+            <img src="./photos/WV.jpeg" alt="Blackwater Falls, WV" width="220" height="300">
+        </div>
+        <p class="author">
+            <b>Office:</b> BE 3.302B
+            <br>
+            <b>E-mail:</b> neelam[dot]akula[at]utdallas[dot]edu 
+            <br>
+            <label class="switch">
+                <input type="checkbox" id="dark-mode-on">
+                <span class="slider round"></span>
+            </label>
+        </p>
+
+        <hr>
+        <div class="topnav">
+            <a href="./index.html">About</a>
+            <a href="./research.html">Research</a>
+            <a class="active" href="./teaching.html">Teaching</a>
+            <a href="./personal.html">Personal</a>
+        </div>
+        <hr>
+
+    </header>
+
+    I have taught/been a TA for several courses, here you can find directories with materials I use when teaching.
+
+    <hr>
+    <footer>
+        <small><i>Last updated: <script>document.write(document.lastModified);</script></i></small>
+    </footer>
+
+    <script>
+        function enableDarkMode() {
+	        document.body.classList.add('latex-dark');
+	        localStorage.setItem('theme', 'dark');
+        }
+
+        function disableDarkMode() {
+	        document.body.classList.remove('latex-dark');
+	        localStorage.setItem('theme', 'light');
+        }
+
+        function detectColorScheme() {
+	        let theme = 'light';
+	        if (localStorage.getItem('theme')) {
+		        theme = localStorage.getItem('theme');
+	        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+		        heme = 'dark'; }
+	        theme === 'dark' ? enableDarkMode() : disableDarkMode();
+        }
+
+        detectColorScheme();
+
+        document.getElementById('dark-mode-on').addEventListener('click', () => {
+	        localStorage.getItem('theme') === 'light' ? enableDarkMode() : disableDarkMode();
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,92 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{mathtools}
+\usepackage{stmaryrd}
+\usepackage[alphabetic]{amsrefs}
+\usepackage{amsfonts, amsmath, amsthm, amssymb}
+\usepackage[margin=1.5in]{geometry}
+\usepackage[colorlinks]{hyperref}
+\usepackage[table]{xcolor}
+\usepackage{tikz}\usetikzlibrary{cd}
+\usepackage{enumerate}
+
+% env style
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[section]
+\newtheorem*{thm*}{Theorem}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{conjecture}[thm]{Conjecture}
+\newtheorem{prob}{Problem}
+\newtheorem{example}[definition]{Example}
+\newtheorem{xca}[definition]{Exercise}
+\theoremstyle{remark}
+\newtheorem{remark}[thm]{\bf Remark}
+\newtheorem{tab}[thm]{\bf Table}
+\newtheorem*{note}{Note}
+
+\numberwithin{equation}{section}
+
+% custom macros
+\def\Z{{\mathbb Z}}
+\def\R{{\mathbb R}}
+\def\N{{\mathbb N}}
+\def\C{{\mathbb C}}
+\def\Q{{\mathbb Q}}
+\def\k{k}
+\def\O{\mathcal{O}}
+\def\sheaf#1{\mathcal{#1}}
+\def\S{\mathcal S}
+\def\P{\mathcal P}
+\def\I{\mathcal I}
+
+\def\GAP{\textsc{Gap}}
+\def\gap{\color{blue}gap> }
+\def\QPA{\textsc{Qpa}}
+\def\Magma{\textsc{Magma}}
+
+\newcommand{\cat}{{\mathcal C}}
+\newcommand{\Ob}{\text{Ob}}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\coker}{coker}
+\renewcommand{\hom}{\textup{Hom}}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\ext}{Ext}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\rep}{rep}
+\DeclareMathOperator{\SET}{\mathbf{Set}}
+\DeclareMathOperator{\CAT}{\mathbf{Cat}}
+\DeclareMathOperator{\QUIV}{\mathbf{Quiv}}
+\newcommand{\dimvec}[3]{\begin{smallmatrix}#1\\#2\\#3\end{smallmatrix}}
+
+
+\title{MATH 299Q: Homework 5\\{\Large Quiver Representations}}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+Let $\k$ be an algebraically closed field.
+
+\begin{enumerate}[1.]
+    \item Recall Homework 3, which asked you to compute the AR-quiver for a quiver $Q$ with $\Delta_Q=\overrightarrow{\mathbb{A}_3}$ and generalize this pattern to $\Delta_Q=\overrightarrow{\mathbb{A}_n}$.
+    
+    \qquad Using the solutions to that problem, derive a formula for the number of indecomposable representations in $\rep Q$ for $\Delta_Q=\mathbb{A}_n$ for any arrow orientation. i.e., find the number of vertices in the AR-quiver of $Q$ in terms of $n=|Q_0|$.
+
+    \emph{[Hint: Consider the construction of AR-quiver that utilized regular $n+3$-gons.]}
+    
+    \vfill
+    \item Let $Q$ be a connected quiver without orientated cycles with $n$ vertices, fix some $\mathbf{d}=(d_i)\in\Z_{\geq 0}^n$ and define the space of all representations $M\in\rep Q$ with dimension vector $E_{\mathbf{d}} := \{M\in\rep Q\mid\underline{\dim}M=\mathbf{d}\}$. It should be clear that $E_{\mathbf{d}}$ is a $\k$-vector space.
+    
+    \qquad Define the group
+    \[G_{\mathbf{d}} := \prod_{i\in Q_0}\textup{GL}_{d_i}(\k).\]
+    This group acts naturally on $E_{\mathbf{d}}$ via conjugation; if $g=(g_i)\in G_{\mathbf{d}}$, $M=(M_i,\varphi_\alpha)\in E_{\mathbf{d}}$, and $i\xrightarrow{\alpha}j\in Q_1$, then $(g\cdot \varphi)_\alpha = g_j\varphi_\alpha g_i^{-1}$. We denote the orbit of $M\in E_{\mathbf{d}}$ under $G_{\mathbf{d}}$ by $\O_M := \{g\cdot M\mid g\in G_{\mathbf{d}}$. Show that the orbit $\O_M$ is the isoclass of the representation $M$, i.e., $\O_M = \{M'\in\rep Q\mid M\cong M'\}$.
+    \vfill
+\end{enumerate}
+
+\end{document}

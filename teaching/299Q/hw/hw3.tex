@@ -1,0 +1,76 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{mathtools}
+\usepackage{stmaryrd}
+\usepackage[alphabetic]{amsrefs}
+\usepackage{amsfonts, amsmath, amsthm, amssymb}
+\usepackage[margin=1.5in]{geometry}
+\usepackage[colorlinks]{hyperref}
+\usepackage[table]{xcolor}
+\usepackage{tikz}\usetikzlibrary{cd}
+\usepackage{enumerate}
+
+% env style
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[section]
+\newtheorem*{thm*}{Theorem}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{conjecture}[thm]{Conjecture}
+\newtheorem{prob}{Problem}
+\newtheorem{example}[definition]{Example}
+\newtheorem{xca}[definition]{Exercise}
+\theoremstyle{remark}
+\newtheorem{remark}[thm]{\bf Remark}
+\newtheorem{tab}[thm]{\bf Table}
+\newtheorem*{note}{Note}
+
+\numberwithin{equation}{section}
+
+% custom macros
+\def\R{{\mathbb R}}
+\def\N{{\mathbb N}}
+\def\C{{\mathbb C}}
+\def\Q{{\mathbb Q}}
+\def\k{\Bbbk}
+\def\O{\mathcal{O}}
+\def\sheaf#1{\mathcal{#1}}
+
+\def\GAP{\textsc{Gap}}
+\def\gap{\color{blue}gap> }
+\def\QPA{\textsc{Qpa}}
+\def\Magma{\textsc{Magma}}
+
+\newcommand{\cat}{{\mathcal C}}
+\newcommand{\Ob}{\text{Ob}}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\coker}{coker}
+\renewcommand{\hom}{\textup{Hom}}
+\DeclareMathOperator{\ext}{Ext}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\rep}{rep}
+\DeclareMathOperator{\SET}{\mathbf{Set}}
+\DeclareMathOperator{\CAT}{\mathbf{Cat}}
+\DeclareMathOperator{\QUIV}{\mathbf{Quiv}}
+\newcommand{\dimvec}[3]{\begin{smallmatrix}#1\\#2\\#3\end{smallmatrix}}
+
+
+\title{MATH 299Q: Homework 3\\{\Large Quiver Representations}}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}[1.]
+    \item Let $Q=\begin{tikzcd}1\arrow[r]&2\arrow[r]&3\end{tikzcd}$, construct the Auslander-Reiten quiver $\Gamma_Q$.
+    \vfill
+    \item Generalize the result of 1 to an arbitrary length quiver with the same orientation, i.e. $\overrightarrow{\mathbb{A}_n}$ or $Q$ is of the form $Q=\begin{tikzcd}1\arrow[r]&\cdots\arrow[r]&n\end{tikzcd}$ and construct the Auslander-Reiten quiver $\Gamma_Q$.
+    \vfill
+\end{enumerate}
+
+\end{document}

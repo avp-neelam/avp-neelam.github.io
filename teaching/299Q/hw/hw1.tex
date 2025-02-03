@@ -1,0 +1,97 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{mathtools}
+\usepackage{stmaryrd}
+\usepackage[alphabetic]{amsrefs}
+\usepackage{amsfonts, amsmath, amsthm, amssymb}
+\usepackage[margin=1.5in]{geometry}
+\usepackage[colorlinks]{hyperref}
+\usepackage[table]{xcolor}
+\usepackage{tikz}\usetikzlibrary{cd}
+\usepackage{enumerate}
+
+% env style
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{conjecture}[thm]{Conjecture}
+\newtheorem{prob}{Problem}
+\newtheorem{example}[definition]{Example}
+\newtheorem{xca}[definition]{Exercise}
+\theoremstyle{remark}
+\newtheorem{remark}[thm]{\bf Remark}
+\newtheorem{tab}[thm]{\bf Table}
+\newtheorem*{note}{Note}
+
+\numberwithin{equation}{section}
+
+% custom macros
+\def\R{{\mathbb R}}
+\def\N{{\mathbb N}}
+\def\C{{\mathbb C}}
+\def\Q{{\mathbb Q}}
+\def\k{k}
+\def\O{\mathcal{O}}
+\def\sheaf#1{\mathcal{#1}}
+
+\def\GAP{\textsc{Gap}}
+\def\gap{\color{blue}gap> }
+\def\QPA{\textsc{Qpa}}
+\def\Magma{\textsc{Magma}}
+
+\newcommand{\cat}{{\mathcal C}}
+\newcommand{\Ob}{\text{Ob}}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\coker}{coker}
+\renewcommand{\hom}{\textup{Hom}}
+\DeclareMathOperator{\ext}{Ext}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\rep}{rep}
+\DeclareMathOperator{\SET}{\mathbf{Set}}
+\DeclareMathOperator{\CAT}{\mathbf{Cat}}
+\DeclareMathOperator{\QUIV}{\mathbf{Quiv}}
+\newcommand{\dimvec}[3]{\begin{smallmatrix}#1\\#2\\#3\end{smallmatrix}}
+
+\title{MATH 299Q: Homework 1\\{\Large Quiver Representations}}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+Let $\k$ denote an algebraically-closed field.
+
+\begin{enumerate}[1.]
+    \item Suppose $V$ and $W$ are two finite-dimensional $\k$-vector spaces, with $\dim V=n$ and $\dim W=m$. Let $T\in\hom(V,W)$, that is $T:V\to W$.
+    \begin{enumerate}[(a)]
+        \item Define $\im T$ and $\ker T$.
+        \item What does it mean for $T$ to be \emph{injective}? What about \emph{surjective}? What conditions on $n$ and $m$ must we have for $T$ to be an \emph{isomorphism}?
+        \item Show that $\hom(V, W)$ has a natural $\k$-vector space structure.\newline [\emph{Hint: For $f,g\in\hom(V,W)$ show that $f+\lambda g\in\hom(V,W)$ for $\lambda\in\k$.}]
+    \end{enumerate}
+    \vfill
+    \item 
+    \begin{enumerate}
+        \item Draw your favorite (finite) quiver!
+        \item Give a non-trivial representation of the quiver you drew in (a).
+    \end{enumerate}
+    \vfill
+    \item Let $Q$ be the quiver
+    \[\begin{tikzcd}
+        1\arrow[rrd, "\alpha"] && && \\
+        && 3 && 4\arrow[ll, "\gamma"'] \\
+        2\arrow[rru, "\beta"'] && &&
+    \end{tikzcd}\]
+    and consider the representations $M$ and $N$:
+    \[M:\begin{tikzcd} \k\arrow[rrd, "\begin{bmatrix}1\\0\end{bmatrix}"] && && \\ && \k^2 && \k\arrow[ll, "\begin{bmatrix}1\\1\end{bmatrix}"'] \\ \k\arrow[rru, "\begin{bmatrix}0\\1\end{bmatrix}"'] && &&\end{tikzcd}
+    \qquad\qquad
+    N:\begin{tikzcd}\k\arrow[rrd, "1"] && && \\ && \k && \k\arrow[ll, "1"'] \\ \k\arrow[rru, "1"'] && &&\end{tikzcd}\]
+    Prove that $\hom(M, N)\cong\k^2$. [\emph{Hint: Draw a morphism between $M$ and $N$.}]
+    \vfill
+\end{enumerate}
+
+\end{document}

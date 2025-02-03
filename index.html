@@ -18,13 +18,14 @@
 <body>
 
     <header>
-        <table style="width:100%">
+        <!-- <table style="width:100%">
             <tbody>
                 <tr>
-                    <td> <a href="./photos/WV.jpeg"><img src="./photos/WV.jpeg" width="220" height="300"></a> </td>
-                    <td align="left" ,="" style="vertical-align: top;">
-                            
-                            <h2>Neelam Venkata Prasad Akula</h2>
+                    <td> 
+                        <a href="./photos/WV.jpeg"><img src="./photos/WV.jpeg" width="220" height="300"></a>
+                    </td>
+                    <td align="left", ="" style="vertical-align: top;">
+                            <h2>Neelam Akula</h2>
                             Graduate Student<br>
                             University of Texas at Dallas<br>
                             School of Natural Sciences and Mathematics, FN32<br>
@@ -40,37 +41,56 @@
                                 <span class="slider round"></span>
                             </label>
                     </td>
+                    <td align="right", ="" style="vertical-align: top;">
+                        <a href="./photos/chinnu.JPG"><img src="./photos/chinnu.JPG" width="220" height="300"></a>
+                    </td>
                 </tr>
             </tbody>
-        </table>
+        </table> -->
+
+        <h1>Neelam Akula</h1>
+        <div class="headshot">
+            <img src="./photos/rijksmuseum.jpg" alt="Rijksmuseum, ND">
+        </div>
+        <p class="author">
+            <b>E-mail:</b> neelam[dot]akula[at]utdallas[dot]edu 
+            <br>
+            <b>Office:</b> BE 3.302B &emsp;
+            <b>Dark Mode:</b>
+            <label class="switch">
+                <input type="checkbox" id="dark-mode-on">
+                <span class="slider round"></span>
+            </label>
+        </p>
+
+        <hr>
+        <!-- <div class="topnav">
+            <a class="active" href="./index.html">About</a>
+            <a href="./research.html">Research</a>
+            <a href="./teaching.html">Teaching</a>
+            <a href="./personal.html">Personal</a>
+        </div>
+        <hr> -->
+
     </header>
     
     <br>
 
-    I am a graduate student studying mathematics at the <a href="https://math.utdallas.edu/">University of Texas at Dallas</a>, where I am advised by <a href="https://personal.utdallas.edu/~coskunuz/">Baris Coskunuzer</a>.<br>
-    A copy of my CV can be found <a href="./src/CV.pdf">here</a>.<br>
+    Welcome! I am a graduate student studying mathematics at the <a href="https://math.utdallas.edu/">University of Texas at Dallas</a>, where I am advised by <a href="https://personal.utdallas.edu/~coskunuz/">Baris Coskunuzer</a>.<br>
     Previously, I was an undergradute at the <a href="https://www-math.umd.edu/">University of Maryland</a> from 2019 to 2023 where I was advised by <a href="https://www.math.umd.edu/~amingh">Amin Gholampour</a>.<br>
+    A copy of my CV can be found <a href="./src/cv.pdf">here</a>.<br>
+
+    <br>
+    <b>Spring 2025 Office Hours:</b> Th 11:00 - 12:00, F 10:00 - 11:00, or by appointment.
+    <br>
 
     <p class="indent-pars">
         <h3>Research:</h3>
-        My current research interests center around topological machine learning.<br>
+        My current research interests center around Topological Machine Learning.<br>
         <br>
         Previously, my research centered around quivers, particularly moduli space of quiver representations and Auslander-Reiten theory.<br>
-        My undergraduate thesis: <i><a href="./src/quiver-AR-theory.pdf">Quiver Representations and Auslander-Reiten Theory</a></i>.<br>
-        <br>
-        I hold novel interest in computational systems such as <a href="https://www.gap-system.org/">GAP</a> and <a href="http://www2.macaulay2.com/Macaulay2/">Macaulay2</a>.<br>
-        <br>
-        I have been a participant in REU sites: in <a href="./photos/reu22.png">Summer 2022</a> (finite group and representation theory); and previously in Summer 2021 (machine learning).<br>
+        My undergraduate thesis: <i><a href="./src/quiver-AR-theory.pdf">Quiver Representations and Auslander-Reiten Theory</a></i>.
     </p>
-
-    <!-- <article class="indent-pars">
-        <h3>Papers & Publications:</h3>
-        <ul>
-            <li>N.V.P. Akula, <a href="./papers/knitting-alg.pdf"><i>The knitting algorithm for AD type quivers</i></a>, (preprint) 2023</li>
-            <li>N.V.P. Akula, <a href="./papers/gabriels-theorem.pdf"><i>A proof of Gabriel's theorem</i></a>, 2022</li>
-            <li>N.V.P.  Akula, <a href="./papers/decimal-expansions.pdf"><i>On Decimal Expansions of Rational Numbers</i></a>, DRP 2021</li>
-        </ul>
-    </article> -->
 
     <article class="indent-pars">
         <h3>Lecture Notes/Expository Papers:</h3>
@@ -79,7 +99,6 @@
             <li><a href="./notes/quiver_notes.pdf">Quiver Representations</a></li>
             <li><a href="./notes/knitting-alg.pdf">The knitting algorithm for AD type quivers</a></li>
             <li><a href="./notes/gabriels-theorem.pdf">A proof of Gabriel's theorem</a></li>
-            <li><a href="./notes/decimal-expansions.pdf">On Decimal Expansions of Rational Numbers</a></li>
         </ul>
     </article>
 
@@ -122,13 +141,10 @@
 
         function detectColorScheme() {
 	        let theme = 'light';
-
 	        if (localStorage.getItem('theme')) {
 		        theme = localStorage.getItem('theme');
 	        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-		        heme = 'dark';
-	        }
-
+		        heme = 'dark'; }
 	        theme === 'dark' ? enableDarkMode() : disableDarkMode();
         }
 

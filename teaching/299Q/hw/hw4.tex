@@ -1,0 +1,96 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{mathtools}
+\usepackage{stmaryrd}
+\usepackage[alphabetic]{amsrefs}
+\usepackage{amsfonts, amsmath, amsthm, amssymb}
+\usepackage[margin=1.5in]{geometry}
+\usepackage[colorlinks]{hyperref}
+\usepackage[table]{xcolor}
+\usepackage{tikz}\usetikzlibrary{cd}
+\usepackage{enumerate}
+
+% env style
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[section]
+\newtheorem*{thm*}{Theorem}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{conjecture}[thm]{Conjecture}
+\newtheorem{prob}{Problem}
+\newtheorem{example}[definition]{Example}
+\newtheorem{xca}[definition]{Exercise}
+\theoremstyle{remark}
+\newtheorem{remark}[thm]{\bf Remark}
+\newtheorem{tab}[thm]{\bf Table}
+\newtheorem*{note}{Note}
+
+\numberwithin{equation}{section}
+
+% custom macros
+\def\R{{\mathbb R}}
+\def\N{{\mathbb N}}
+\def\C{{\mathbb C}}
+\def\Q{{\mathbb Q}}
+\def\k{k}
+\def\O{\mathcal{O}}
+\def\sheaf#1{\mathcal{#1}}
+\def\S{\mathcal S}
+\def\P{\mathcal P}
+\def\I{\mathcal I}
+
+\def\GAP{\textsc{Gap}}
+\def\gap{\color{blue}gap> }
+\def\QPA{\textsc{Qpa}}
+\def\Magma{\textsc{Magma}}
+
+\newcommand{\cat}{{\mathcal C}}
+\newcommand{\Ob}{\text{Ob}}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\coker}{coker}
+\renewcommand{\hom}{\textup{Hom}}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\ext}{Ext}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\rep}{rep}
+\DeclareMathOperator{\SET}{\mathbf{Set}}
+\DeclareMathOperator{\CAT}{\mathbf{Cat}}
+\DeclareMathOperator{\QUIV}{\mathbf{Quiv}}
+\newcommand{\dimvec}[3]{\begin{smallmatrix}#1\\#2\\#3\end{smallmatrix}}
+
+
+\title{MATH 299Q: Homework 4\\{\Large Quiver Representations}}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+Let $\k$ be an algebraically closed field.
+
+\begin{enumerate}[1.]
+    \item Fix $Q$ to be the Kroenecker $2$-quiver;
+    \[\begin{tikzcd}1\arrow[rr,shift left=1,"\alpha"]\arrow[rr,shift right=1,"\beta"']&&2\end{tikzcd}.\]
+    Associate to $Q$, the \emph{path algebra} $\k Q$ (recall this is a $\k$-algebra).
+    \begin{enumerate}[(a)]
+        \item What is $\dim\k Q$?
+        \item An \emph{endomorphism} is a morphism from $M$ to itself, that is for some $M\in\rep Q$ the morphism $f:M\to M$. The collection of all endomorphisms, $\End M$, of a fixed representation $M$, much like $\hom(-,-)$, forms a natural $\k$-vector space under composition of morphisms. Let $M$ be the following representation of $Q$;
+        \[\begin{tikzcd}\k^2\arrow[rr,shift left=1,"\begin{bmatrix}1&0\\0&1\\0&0\end{bmatrix}"]\arrow[rr,shift right=1,"\begin{bmatrix}0&0\\1&0\\0&1\end{bmatrix}"']&&\k^3\end{tikzcd}.\]
+        What is $\dim(\End\k Q)$?
+    \end{enumerate}
+    \vfill
+    \item Fix $Q$ to be as follows;
+    \[\begin{tikzcd}
+      && && &&2\arrow[lld,"\beta"'] && \\
+      6&&5\arrow[ll,"\zeta"']&&4\arrow[ll,"\epsilon"']&& &&1\arrow[llu,"\alpha"']\arrow[lld,"\gamma"] \\
+      && && &&3\arrow[llu,"\delta"] &&
+    \end{tikzcd}\]
+    With the set of relations $R = \{\alpha\beta-\gamma\delta, \beta\epsilon, \delta\epsilon\zeta\}$ generating the admissible ideal $I=\langle R\rangle$. Compute the indecomposable projective representations $\P(1)$, $\P(3)$, and $\P(4)$ of $(Q,I)$.
+    \vfill
+\end{enumerate}
+
+\end{document}
