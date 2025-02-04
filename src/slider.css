@@ -66,5 +66,50 @@
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 30%;
+  width: 35%;
 }
+
+.headshot h2 {
+  text-align: center;
+}
+
+.topnav {
+  margin-left: auto;
+  margin-right: auto;
+  margin-inline: auto;
+}
+
+.topnav a{
+  float: none;
+  left: 50%;
+  width: 50%;
+}
+
+.text-image {
+  width: 100%;
+}
+
+.text-image img {
+  float: right;
+  width: 100%;
+  display: block;
+}
+
+
+.post-container {
+  /* margin: 20px 20px 0 0;  */
+  width: 95%;
+  border: 2px solid #333;
+  overflow: auto
+}
+
+.post-thumb {
+  float: right
+}
+.post-thumb img {
+  display: block
+}
+.post-content {
+  margin-right: 350px
+}
+
