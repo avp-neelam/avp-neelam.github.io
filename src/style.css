@@ -1,788 +1,532 @@
-/*!
- * LaTeX.css (https://latex.vercel.app/)
- *
- * Source: https://github.com/vincentdoerig/latex-css
- * Licensed under MIT (https://github.com/vincentdoerig/latex-css/blob/master/LICENSE)
-*/
+/* ============================================================
+   WebpageV2 — Latin Modern / LaTeX-inspired, modernized
+   Automatic light/dark via prefers-color-scheme + light-dark()
+   ============================================================ */
 
+/* ---- Fonts ---- */
 @font-face {
   font-family: 'Latin Modern';
-  font-style: normal;
-  font-weight: normal;
-  font-display: swap;
+  font-style: normal; font-weight: normal; font-display: swap;
   src: url('./fonts/LM-regular.woff2') format('woff2'),
-    url('./fonts/LM-regular.woff') format('woff'),
-    url('./fonts/LM-regular.ttf') format('truetype');
+       url('./fonts/LM-regular.woff')  format('woff'),
+       url('./fonts/LM-regular.ttf')   format('truetype');
 }
-
 @font-face {
   font-family: 'Latin Modern';
-  font-style: italic;
-  font-weight: normal;
-  font-display: swap;
+  font-style: italic; font-weight: normal; font-display: swap;
   src: url('./fonts/LM-italic.woff2') format('woff2'),
-    url('./fonts/LM-italic.woff') format('woff'),
-    url('./fonts/LM-italic.ttf') format('truetype');
+       url('./fonts/LM-italic.woff')  format('woff'),
+       url('./fonts/LM-italic.ttf')   format('truetype');
 }
-
 @font-face {
   font-family: 'Latin Modern';
-  font-style: normal;
-  font-weight: bold;
-  font-display: swap;
+  font-style: normal; font-weight: bold; font-display: swap;
   src: url('./fonts/LM-bold.woff2') format('woff2'),
-    url('./fonts/LM-bold.woff') format('woff'),
-    url('./fonts/LM-bold.ttf') format('truetype');
+       url('./fonts/LM-bold.woff')  format('woff'),
+       url('./fonts/LM-bold.ttf')   format('truetype');
 }
-
 @font-face {
   font-family: 'Latin Modern';
-  font-style: italic;
-  font-weight: bold;
-  font-display: swap;
+  font-style: italic; font-weight: bold; font-display: swap;
   src: url('./fonts/LM-bold-italic.woff2') format('woff2'),
-    url('./fonts/LM-bold-italic.woff') format('woff'),
-    url('./fonts/LM-bold-italic.ttf') format('truetype');
+       url('./fonts/LM-bold-italic.woff')  format('woff'),
+       url('./fonts/LM-bold-italic.ttf')   format('truetype');
 }
 
-@font-face {
-  font-family: 'Libertinus';
-  font-style: normal;
-  font-weight: normal;
-  font-display: swap;
-  src: url('./fonts/Libertinus-regular.woff2') format('woff2');
-}
-
-@font-face {
-  font-family: 'Libertinus';
-  font-style: italic;
-  font-weight: normal;
-  font-display: swap;
-  src: url('./fonts/Libertinus-italic.woff2') format('woff2');
-}
-
-@font-face {
-  font-family: 'Libertinus';
-  font-style: normal;
-  font-weight: bold;
-  font-display: swap;
-  src: url('./fonts/Libertinus-bold.woff2') format('woff2');
-}
-
-@font-face {
-  font-family: 'Libertinus';
-  font-style: italic;
-  font-weight: bold;
-  font-display: swap;
-  src: url('./fonts/Libertinus-bold-italic.woff2') format('woff2');
-}
-
-@font-face {
-  font-family: 'Libertinus';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url('./fonts/Libertinus-semibold.woff2') format('woff2');
-}
-
-@font-face {
-  font-family: 'Libertinus';
-  font-style: italic;
-  font-weight: 600;
-  font-display: swap;
-  src: url('./fonts/Libertinus-semibold-italic.woff2') format('woff2');
-}
-
-/* Box sizing rules */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-/* :root {
-  --body-color: hsl(0, 5%, 10%);
-  --body-bg-color: hsl(210, 20%, 98%);
-  --link-visited: hsl(0, 100%, 33%);
-  --link-focus-outline: hsl(220, 90%, 52%);
-  --pre-bg-color: hsl(210, 28%, 93%);
-  --kbd-bg-color: hsl(210, 5%, 100%);
-  --kbd-border-color: hsl(210, 5%, 70%);
-  --table-border-color: black;
-
-  --border-width-thin: 1.36px;
-  --border-width-thick: 2.27px;
-
-  --sidenote-target-border-color: hsl(55, 55%, 70%);
-  --footnotes-border-color: hsl(0, 0%, 39%);
-
-  --text-indent-size: 1.463rem; /* In 12pt [Latin Modern font] LaTeX article
-  \parindent =~ 17.625pt; taking also into account the ratio
-  1pt[LaTeX] = (72 / 72.27) * 1pt[HTML], with default 12pt/1rem LaTeX.css font
-  size, the identation value in rem CSS units is:
-  \parindent =~ 17.625 * (72 / 72.27) / 12 = 1.463rem. 
-} */
-
+/* ---- CSS Variables (auto light/dark) ---- */
 :root {
   color-scheme: light dark;
-  --border-width-thin: 1.36px;
-  --border-width-thick: 2.27px;
 
-  --text-indent-size: 1.463rem; /* In 12pt [Latin Modern font] LaTeX article
-  \parindent =~ 17.625pt; taking also into account the ratio
-  1pt[LaTeX] = (72 / 72.27) * 1pt[HTML], with default 12pt/1rem LaTeX.css font
-  size, the identation value in rem CSS units is:
-  \parindent =~ 17.625 * (72 / 72.27) / 12 = 1.463rem. */
+  --bg:           light-dark(#f5f3f0, #1c1c1e);
+  --bg-nav:       light-dark(rgba(245,243,240,0.92), rgba(28,28,30,0.92));
+  --surface:      light-dark(#ffffff, #242426);
+  --text:         light-dark(#1a1a1a, #e8e8e6);
+  --text-muted:   light-dark(#555550, #9a9a96);
+  --accent:       light-dark(#8b1a1a, #c9a96e);
+  --accent-hover: light-dark(#6b1010, #e0c48a);
+  --border:       light-dark(#d4d0ca, #3a3a3c);
+  --rule:         light-dark(#c8c4bc, #3a3a3c);
+
+  --font-serif: 'Latin Modern', Georgia, 'Times New Roman', serif;
+  --font-mono:  Menlo, Monaco, Consolas, 'Courier New', monospace;
+
+  --max-width: 860px;
+  --nav-height: 52px;
 }
 
-body {
-  color: light-dark(#333b3c, #efefec);
-  background-color: light-dark(#efedea, #223a2c);
+/* ---- Reset ---- */
+*, *::before, *::after { box-sizing: border-box; }
+body, h1, h2, h3, h4, p, ul, ol, li, figure, dl, dd { margin: 0; }
 
-  --body-color: light-dark(hsl(0, 5%, 10%), hsl(0, 0%, 86%));
-  --body-bg-color: light-dark(hsl(210, 20%, 98%), hsl(0, 0%, 16%));
-  --link-visited: light-dark(hsl(0, 100%, 33%), hsl(196 80% 77%));
-  --link-focus-outline: light-dark(hsl(220, 90%, 52%), hsl(215, 63%, 73%));
-  --pre-bg-color: light-dark(hsl(210, 28%, 93%), hsl(0, 1%, 25%));
-  --kbd-bg-color: light-dark(hsl(210, 5%, 100%), hsl(0, 0%, 16%));
-  --kbd-border-color: light-dark(hsl(210, 5%, 70%), hsl(210, 5%, 70%));
-  --table-border-color: light-dark(black, white);
-  --sidenote-target-border-color: light-dark(hsl(55, 55%, 70%), hsl(0, 0%, 59%));
-  --footnotes-border-color: light-dark(hsl(0, 0%, 39%), hsl(0, 0%, 59%));
-  --proof-symbol-filter: invert(80%);
-}
-
-
-.latex-dark {
-  --body-color: hsl(0, 0%, 86%);
-  --body-bg-color: hsl(0, 0%, 16%);
-  --link-visited: hsl(196 80% 77%);
-  --link-focus-outline: hsl(215, 63%, 73%);
-  --pre-bg-color: hsl(0, 1%, 25%);
-  --kbd-bg-color: hsl(0, 0%, 16%);
-  --kbd-border-color: hsl(210, 5%, 70%);
-  --table-border-color: white;
-  --sidenote-target-border-color: hsl(0, 0%, 59%);
-  --footnotes-border-color: hsl(0, 0%, 59%);
-  --proof-symbol-filter: invert(80%);
-}
-
-@media (prefers-color-scheme: dark) {
-   .latex-dark-auto {
-    --body-color: hsl(0, 0%, 86%);
-    --body-bg-color: hsl(0, 0%, 16%);
-    --link-visited: hsl(196 80% 77%);
-    --link-focus-outline: hsl(215, 63%, 73%);
-    --pre-bg-color: hsl(0, 1%, 25%);
-    --kbd-bg-color: hsl(0, 0%, 16%);
-    --kbd-border-color: hsl(210, 5%, 70%);
-    --table-border-color: white;
-    --sidenote-target-border-color: hsl(0, 0%, 59%);
-    --footnotes-border-color: hsl(0, 0%, 59%);
-    --proof-symbol-filter: invert(80%);
-  }
-}
-
-/* Remove default margin */
-body,
-h1,
-h2,
-h3,
-h4,
-p,
-ul[class],
-ol[class],
-li,
-figure,
-figcaption,
-dl,
-dd {
-  margin: 0;
-}
-
-/* Make default font-size 1rem and add smooth scrolling to anchors */
+/* ---- Base ---- */
 html {
   font-size: 1rem;
-}
-@media (prefers-reduced-motion: no-preference) {
-  html {
-    scroll-behavior: smooth;
-  }
-}
-
-body.libertinus {
-  font-family: 'Libertinus', Georgia, Cambria, 'Times New Roman', Times, serif;
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--nav-height) + 24px);
 }
 
 body {
-  font-family: 'Latin Modern', Georgia, Cambria, 'Times New Roman', Times, serif;
+  font-family: var(--font-serif);
+  font-size: 1rem;
   line-height: 1.8;
-
-  max-width: 130ch;
+  color: var(--text);
+  background-color: var(--bg);
   min-height: 100vh;
   overflow-x: hidden;
-  margin: 0 auto;
-  padding: 2rem 1.25rem;
-
-  counter-reset: theorem definition sidenote-counter;
-
-  color: var(--body-color);
-  background-color: var(--body-bg-color);
-
   text-rendering: optimizeLegibility;
 }
 
-/* Justify and hyphenate all paragraphs */
-p {
+/* ---- Navigation ---- */
+nav.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: var(--nav-height);
+  background: var(--bg-nav);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+nav.site-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 2.5rem;
+}
+
+nav.site-nav a {
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  letter-spacing: 0.03em;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+nav.site-nav a:hover,
+nav.site-nav a.active {
+  color: var(--accent);
+}
+
+/* ---- Page wrapper ---- */
+.page {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 3rem 1.5rem 4rem;
+}
+
+/* ---- Hero / About ---- */
+.hero {
+  margin-bottom: 2rem;
+}
+
+/* Float the photo right so all text wraps around it */
+.hero-photo {
+  float: right;
+  margin: 0 0 1.5rem 2.5rem;
+}
+
+.hero-photo img {
+  width: 200px;
+  height: 260px;
+  object-fit: cover;
+  object-position: center top;
+  object-position: 70% top;
+  border-radius: 4px;
+  display: block;
+  border: 1px solid var(--border);
+  filter: light-dark(none, brightness(0.88) contrast(1.05));
+}
+
+/* Clear float after the about section */
+#about::after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
+.hero-text { display: block; }
+
+.hero-title-block { margin-bottom: 1.1rem; }
+
+.hero-text h1 {
+  font-size: 2.2rem;
+  font-weight: bold;
+  line-height: 1.2;
+  margin-bottom: 0.35rem;
+  letter-spacing: -0.01em;
+}
+
+.hero-text .subtitle {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.hero-text .contact-info {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.8;
+  margin-bottom: 1.1rem;
+}
+
+.hero-text .contact-info a {
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+.hero-text p {
   text-align: justify;
   hyphens: auto;
   -webkit-hyphens: auto;
-  -moz-hyphens: auto;
-  margin-top: 1rem;
+  margin-top: 0.9rem;
+  font-size: 0.975rem;
 }
 
-/* Indents paragraphs like in LaTeX documents*/
-.indent-pars p {
-  text-indent: var(--text-indent-size);
+.hero-bio {
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  margin-top: 0.9rem;
+  font-size: 0.975rem;
 }
 
-.indent-pars p.no-indent,
-p.no-indent {
-  text-indent: 0;
-}
-
-.indent-pars ol p,
-.indent-pars ul p {
-  text-indent: 0;
-}
-
-.indent-pars h2 + p,
-.indent-pars h3 + p,
-.indent-pars h4 + p {
-  text-indent: 0;
-}
-
-/* A elements that don't have a class get default styles */
-a:not([class]) {
-  text-decoration-skip-ink: auto;
-}
-
-/* Make links red */
-a,
-a:visited {
-  color: var(--link-visited);
-}
-
-a:focus {
-  outline-offset: 2px;
-  outline: 2px solid var(--link-focus-outline);
-}
-
-/* Make images easier to work with */
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
-
-/* Inherit fonts for inputs and buttons */
-input,
-button,
-textarea,
-select {
-  font: inherit;
-}
-
-/* Prevent textarea from overflowing */
-textarea {
-  width: 100%;
-}
-
-/* Natural flow and rhythm in articles by default */
-article > * + * {
-  margin-top: 1em;
-}
-
-/* Styles for inline code or code snippets */
-code,
-pre,
-kbd {
-  font-family: Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
-    monospace;
-  font-size: 85%;
-  hyphens: none;
-}
-pre {
-  padding: 1rem 1.4rem;
-  max-width: 100%;
-  overflow: auto;
-  border-radius: 4px;
-  background: var(--pre-bg-color);
-}
-pre code {
-  font-size: 95%;
-  position: relative;
-}
-kbd {
-  background: var(--kbd-bg-color);
-  border: 1px solid var(--kbd-border-color);
-  border-radius: 2px;
-  padding: 2px 4px;
-  font-size: 75%;
-}
-
-/* Better tables */
-table:not(.borders-custom) {
-  border-collapse: collapse;
-  border-spacing: 0;
-  width: auto;
-  max-width: 100%;
-  border-top: var(--border-width-thick) solid var(--table-border-color);
-  border-bottom: var(--border-width-thick) solid var(--table-border-color);
-  /* display: block; */
-  overflow-x: auto; /* does not work because element is not block */
-  /* white-space: nowrap; */
-  counter-increment: caption;
-}
-/* add bottom border on column table headings  */
-table:not(.borders-custom) tr > th[scope='col'] {
-  border-bottom: var(--border-width-thin) solid var(--table-border-color);
-}
-/* add right border on row table headings  */
-table:not(.borders-custom) tr > th[scope='row'] {
-  border-right: var(--border-width-thin) solid var(--table-border-color);
-}
-table:not(.borders-custom) > tbody > tr:first-child > td,
-table:not(.borders-custom) > tbody > tr:first-child > th {
-  border-top: var(--border-width-thin) solid var(--table-border-color);
-}
-table:not(.borders-custom) > tbody > tr:last-child > td,
-table:not(.borders-custom) > tbody > tr:last-child > th {
-  border-bottom: var(--border-width-thin) solid var(--table-border-color);
-}
-
-th,
-td {
-  text-align: left;
-  padding: 0.5rem;
-  line-height: 1.1;
-}
-/* Table caption */
-caption {
-  text-align: left;
-  font-size: 0.923em;
-  /* border-bottom: 2pt solid #000; */
-  padding: 0 0.25em 0.25em;
-  width: 100%;
-  margin-left: 0;
-}
-
-caption::before {
-  content: 'Table ' counter(caption) '. ';
-  font-weight: bold;
-}
-
-/* allow scroll on the x-axis */
-.scroll-wrapper {
-  overflow-x: auto;
-}
-
-/* if a table is wrapped in a scroll wrapper,
-  the table cells shouldn't wrap */
-.scroll-wrapper > table td {
-  white-space: nowrap;
-}
-
-/* Table custom borders */
-table.borders-custom {
-  border-collapse: collapse;
-  border-spacing: 0;
-  width: auto;
-  max-width: 100%;
-  overflow-x: auto;
-  counter-increment: caption;
-}
-
-.border-top-thick {
-  border-top: var(--border-width-thick) solid var(--table-border-color);
-}
-.border-right-thick {
-  border-right: var(--border-width-thick) solid var(--table-border-color);
-}
-.border-bottom-thick {
-  border-bottom: var(--border-width-thick) solid var(--table-border-color);
-}
-.border-left-thick {
-  border-left: var(--border-width-thick) solid var(--table-border-color);
-}
-
-.border-top-thin {
-  border-top: var(--border-width-thin) solid var(--table-border-color);
-}
-.border-right-thin {
-  border-right: var(--border-width-thin) solid var(--table-border-color);
-}
-.border-bottom-thin {
-  border-bottom: var(--border-width-thin) solid var(--table-border-color);
-}
-.border-left-thin {
-  border-left: var(--border-width-thin) solid var(--table-border-color);
-}
-
-/* Table column alignment */
-.col-1-l tr > :nth-child(1),
-.col-2-l tr > :nth-child(2),
-.col-3-l tr > :nth-child(3),
-.col-4-l tr > :nth-child(4),
-.col-5-l tr > :nth-child(5),
-.col-6-l tr > :nth-child(6),
-.col-7-l tr > :nth-child(7),
-.col-8-l tr > :nth-child(8),
-.col-9-l tr > :nth-child(9),
-.col-10-l tr > :nth-child(10),
-.col-11-l tr > :nth-child(11),
-.col-12-l tr > :nth-child(12) {
-  text-align: left;
-}
-.col-1-c tr > :nth-child(1),
-.col-2-c tr > :nth-child(2),
-.col-3-c tr > :nth-child(3),
-.col-4-c tr > :nth-child(4),
-.col-5-c tr > :nth-child(5),
-.col-6-c tr > :nth-child(6),
-.col-7-c tr > :nth-child(7),
-.col-8-c tr > :nth-child(8),
-.col-9-c tr > :nth-child(9),
-.col-10-c tr > :nth-child(10),
-.col-11-c tr > :nth-child(11),
-.col-12-c tr > :nth-child(12) {
-  text-align: center;
-}
-.col-1-r tr > :nth-child(1),
-.col-2-r tr > :nth-child(2),
-.col-3-r tr > :nth-child(3),
-.col-4-r tr > :nth-child(4),
-.col-5-r tr > :nth-child(5),
-.col-6-r tr > :nth-child(6),
-.col-7-r tr > :nth-child(7),
-.col-8-r tr > :nth-child(8),
-.col-9-r tr > :nth-child(9),
-.col-10-r tr > :nth-child(10),
-.col-11-r tr > :nth-child(11),
-.col-12-r tr > :nth-child(12) {
-  text-align: right;
-}
-
-/* Format figure captions (based on table captions) */
-figure {
-  counter-increment: figcaption;
-}
-figcaption {
-  text-align: left;
-  font-size: 0.923em;
-  padding: 0.25em 0.25em 0;
-  width: 100%;
-  margin-left: 0;
-}
-figcaption::before {
-  content: 'Figure ' counter(figcaption) '. ';
-  font-weight: bold;
-}
-
-/* Center align the title */
-h1:first-child {
-  text-align: center;
-}
-
-/* Nested ordered list for ToC */
-nav ol {
-  counter-reset: item;
-  padding-left: 2rem;
-}
-nav li {
-  display: block;
-}
-nav li::before {
-  content: counters(item, '.') ' ';
-  counter-increment: item;
-  padding-right: 0.85rem;
-}
-
-/* Center definitions (most useful for display equations) */
-dl dd {
-  text-align: center;
-}
-
-/* Theorem */
-.theorem {
-  counter-increment: theorem;
-  display: block;
-  margin: 12px 0;
-  font-style: italic;
-}
-.theorem::before {
-  content: 'Theorem ' counter(theorem) '. ';
-  font-weight: bold;
-  font-style: normal;
-}
-
-/* Lemma */
-.lemma {
-  counter-increment: theorem;
-  display: block;
-  margin: 12px 0;
-  font-style: italic;
-}
-.lemma::before {
-  content: 'Lemma ' counter(theorem) '. ';
-  font-weight: bold;
-  font-style: normal;
-}
-
-/* Proof */
-.proof {
-  display: block;
-  margin: 12px 0;
-  font-style: normal;
-  position: relative;
-}
-.proof::before {
-  content: 'Proof. ' attr(title);
-  font-style: italic;
-}
-.proof::after {
-  content: '◾️';
-  filter: var(--proof-symbol-filter);
-  position: absolute;
-  right: -12px;
-  bottom: -2px;
-}
-
-/* Definition */
-.definition {
-  counter-increment: definition;
-  display: block;
-  margin: 12px 0;
-  font-style: normal;
-}
-.definition::before {
-  content: 'Definition ' counter(definition) '. ';
-  font-weight: bold;
-  font-style: normal;
-}
-
-/* Center align author name, use small caps and add vertical spacing  */
-.author {
-  margin: 0.85rem 0;
-  font-variant-caps: small-caps;
-  text-align: center;
-}
-
-/* Sidenotes */
-
-.sidenote {
-  font-size: 0.8rem;
-  float: right;
-  clear: right;
-  width: 18vw;
-  margin-right: -20vw;
-  margin-bottom: 1em;
-  text-indent: 0;
-}
-
-.sidenote.left {
-  float: left;
-  margin-left: -20vw;
-  margin-bottom: 1em;
-  text-indent: 0;
-}
-
-/* (WIP) add border when a sidenote is clicked on */
-.sidenote:target {
-  border: var(--sidenote-target-border-color) 1.5px solid;
-  padding: 0 .5rem;
-  scroll-margin-block-start: 10rem;
-}
-
-/* sidenote counter */
-.sidenote-number {
-  counter-increment: sidenote-counter;
-}
-
-.sidenote-number::after,
-.sidenote::before {
-  position: relative;
-  vertical-align: baseline;
-}
-
-/* add number in main content */
-.sidenote-number::after {
-  content: counter(sidenote-counter);
-  font-size: 0.7rem;
-  top: -0.5rem;
-  left: 0.1rem;
-}
-
-/* add number in front of the sidenote */
-.sidenote-number ~ .sidenote::before {
-  content: counter(sidenote-counter) ' ';
-  font-size: 0.7rem;
-  top: -0.5rem;
-}
-
-label.sidenote-toggle:not(.sidenote-number) {
-  display: none;
-}
-
-/* sidenotes inside blockquotes are indented more */
-blockquote .sidenote {
-  margin-right: -24vw;
-  width: 18vw;
-}
-
-
-label.sidenote-toggle {
-  display: inline;
-  cursor: pointer;
-}
-
-input.sidenote-toggle {
-  display: none;
-}
-
-@media (max-width: 1050px) {
-  label.sidenote-toggle:not(.sidenote-number) {
-    display: inline;
-  }
-  .sidenote {
-    display: none;
-  }
-  .sidenote-toggle:checked + .sidenote {
-    display: block;
-    margin: 0.5rem 1.25rem 1rem 0.5rem;
-    float: left;
-    left: 1rem;
-    clear: both;
-    width: 95%;
-  }
-  /* tweak indentation of sidenote inside a blockquote */
-  blockquote .sidenote {
-    margin-right: -25vw;
-    width: 16vw;
-  }
-}
-
-/* Make footnote text smaller and left align it (looks bad with long URLs) */
-.footnotes p {
-  text-align: left;
-  line-height: 1.5;
-  font-size: 85%;
-  margin-bottom: 0.4rem;
-}
-.footnotes {
-  border-top: 1px solid var(--footnotes-border-color);
-}
-
-/* Center title and paragraph */
-.abstract,
-.abstract p {
-  text-align: center;
-  margin-top: 0;
-}
-.abstract {
-  margin: 2.25rem 0;
-}
-.abstract > h2 {
-  font-size: 1rem;
-  margin-bottom: -0.2rem;
-}
-
-/* Format the LaTeX symbol correctly (a higher up, e lower) */
-.latex span:nth-child(1) {
-  text-transform: uppercase;
-  font-size: 0.75em;
-  vertical-align: 0.28em;
-  margin-left: -0.48em;
-  margin-right: -0.15em;
-  line-height: 1ex;
-}
-
-.latex span:nth-child(2) {
-  text-transform: uppercase;
-  vertical-align: -0.5ex;
-  margin-left: -0.1667em;
-  margin-right: -0.125em;
-  line-height: 1ex;
-}
-
-/* Heading typography */
-h1 {
-  font-size: 2.5rem;
-  line-height: 3.25rem;
-  margin-bottom: 1.625rem;
-}
-
-h2 {
-  font-size: 1.7rem;
-  line-height: 2rem;
+/* ---- Section headings ---- */
+section {
   margin-top: 3rem;
 }
 
-h3 {
-  font-size: 1.4rem;
-  margin-top: 2.5rem;
+.section-rule {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.4rem;
 }
 
-h4 {
-  font-size: 1.2rem;
-  margin-top: 2rem;
+.section-rule h2 {
+  font-size: 1.15rem;
+  font-weight: bold;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--text);
 }
 
-h5 {
-  font-size: 1rem;
-  margin-top: 1.8rem;
+.section-rule::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--rule);
 }
 
-h6 {
-  font-size: 1rem;
+/* ---- Publications ---- */
+.pub-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.pub-item {
+  padding: 1rem 1.2rem;
+  border-left: 2px solid var(--accent);
+  background: var(--surface);
+  border-radius: 0 4px 4px 0;
+}
+
+.pub-title {
   font-style: italic;
+  font-size: 0.975rem;
   font-weight: normal;
-  margin-top: 2.5rem;
 }
 
-h3,
-h4,
-h5,
-h6 {
-  line-height: 1.625rem;
+.pub-title a {
+  color: var(--text);
+  text-decoration: none;
 }
 
-h1 + h2 {
-  margin-top: 1.625rem;
+.pub-title a:hover { color: var(--accent); }
+
+.pub-authors {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  margin-top: 0.2rem;
 }
 
-h2 + h3,
-h3 + h4,
-h4 + h5 {
-  margin-top: 0.8rem;
+.pub-venue {
+  font-size: 0.88rem;
+  margin-top: 0.15rem;
 }
 
-h5 + h6 {
-  margin-top: -0.8rem;
+.pub-venue .venue-name {
+  font-style: italic;
+  color: var(--accent);
 }
 
-h2,
-h3,
-h4,
-h5,
-h6 {
-  margin-bottom: 0.8rem;
+.pub-venue .venue-detail {
+  color: var(--text-muted);
 }
 
-.pubs-group { margin-bottom: 1.25rem; }
-.pubs-list { list-style: disc; padding-left: 1.25rem; }
-.pub-item { margin: 0.35rem 0; }
-.pub-authors { font-weight: 500; }
-.pub-title { font-weight: 600; }
-.pub-venue { font-style: italic; }
-.pub-link { margin-left: 0.35rem; }
+/* ---- Notes / Links lists ---- */
+.item-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.item-list li {
+  font-size: 0.96rem;
+}
+
+.item-list li::before {
+  content: '—';
+  margin-right: 0.5rem;
+  color: var(--text-muted);
+}
+
+.item-list a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.item-list a:hover { color: var(--accent-hover); text-decoration: underline; }
+
+/* ---- Teaching ---- */
+.teaching-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.teaching-item {
+  display: flex;
+  gap: 1rem;
+  align-items: baseline;
+  font-size: 0.96rem;
+}
+
+.teaching-role {
+  color: var(--text-muted);
+  font-style: italic;
+  font-size: 0.88rem;
+  white-space: nowrap;
+  min-width: 80px;
+}
+
+/* ---- Graph background canvas ---- */
+#graph-bg {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.55;
+}
+
+@media (prefers-color-scheme: light) {
+  #graph-bg { opacity: 0.85; }
+}
+
+body {
+  position: relative;
+}
+
+/* Nav, content, and footer sit above the canvas */
+nav.site-nav, main.page, footer {
+  position: relative;
+  z-index: 1;
+}
+
+/* Paint a solid background behind the content column so the graph
+   is only visible in the left/right margins */
+main.page {
+  background-color: var(--bg);
+  box-shadow: 0 0 40px 20px var(--bg);
+}
+
+footer {
+  background-color: var(--bg);
+}
+
+/* ---- Social links ---- */
+.social-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.75rem;
+  margin: 0;
+}
+
+.social-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.84rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  padding: 0.2rem 0.55rem;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.social-links a:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.social-links svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+/* ---- Pub item inner layout ---- */
+.pub-item {
+  display: flex;
+  gap: 1.2rem;
+  align-items: flex-start;
+}
+
+.pub-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.pub-figure {
+  flex-shrink: 0;
+  width: 200px;
+}
+
+.pub-figure img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 3px;
+  border: 1px solid var(--border);
+  object-fit: cover;
+  filter: light-dark(none, brightness(0.85));
+}
+
+/* ---- Publication group label ---- */
+.pub-group-label {
+  font-size: 0.78rem;
+  font-weight: normal;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 0 0 0.75rem;
+  line-height: 1;
+}
+
+/* ---- Pub item: in-progress variant ---- */
+.pub-item-wip {
+  border-left-color: var(--border);
+  opacity: 0.82;
+}
+
+/* ---- Pub links row ---- */
+.pub-links {
+  display: flex;
+  gap: 0.4rem;
+  margin-top: 0.45rem;
+  flex-wrap: wrap;
+}
+
+.pub-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.77rem;
+  font-family: var(--font-mono);
+  padding: 0.15rem 0.55rem;
+  border-radius: 3px;
+  text-decoration: none;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.pub-tag:hover { color: var(--accent); border-color: var(--accent); }
+.pub-tag-gh:hover { color: var(--text); border-color: var(--text); }
+
+/* ---- Publication figure — clickable ---- */
+.pub-figure img {
+  cursor: zoom-in;
+  transition: opacity 0.15s;
+}
+.pub-figure img:hover { opacity: 0.85; }
+
+/* ---- Lightbox overlay ---- */
+#lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.72);
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  cursor: zoom-out;
+}
+#lightbox.open { display: flex; }
+
+#lightbox img {
+  max-width: min(820px, 100%);  /* slightly narrower than content canvas */
+  max-height: 90vh;
+  width: auto;
+  height: auto;
+  border-radius: 4px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+  object-fit: contain;
+  cursor: default;
+}
+
+/* ---- Links ---- */
+a { color: var(--accent); }
+a:hover { color: var(--accent-hover); }
+a:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ---- Footer ---- */
+footer {
+  margin-top: 4rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--rule);
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 600px) {
+  .hero-photo {
+    float: none;
+    margin: 0 0 1.2rem 0;
+  }
+
+  .hero-photo img {
+    width: 140px;
+    height: 180px;
+  }
+
+  nav.site-nav ul {
+    gap: 1.2rem;
+  }
+
+  .page {
+    padding: 2rem 1rem 3rem;
+  }
+}

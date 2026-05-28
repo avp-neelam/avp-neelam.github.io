@@ -1,124 +1,548 @@
 <!DOCTYPE html>
-
-<html>
+<html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="text/html;">
-    <link rel="icon" type="image/png" href="./src/seal.png">
-    
-    <title>AVP Neelam</title>
-
-    <link rel="stylesheet" href="./src/slider.css">
-
-    <!-- LaTeX CSS & MathJax Support -->
-    <link rel="stylesheet" href="./src/style.css">
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="icon" type="image/png" href="./src/seal.png">
+  <title>Neelam Akula</title>
+  <link rel="stylesheet" href="./src/style.css">
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 
 <body>
 
-    <header>        
-        <div class="headshot">
-            <h2>Neelam Akula</h2>
-            <!-- <img src="./photos/rijksmuseum.jpg" alt="Rijksmuseum, ND"> -->
+  <!-- Graph background canvas -->
+  <canvas id="graph-bg" aria-hidden="true"></canvas>
+
+  <!-- Navigation -->
+  <nav class="site-nav" aria-label="Site navigation">
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#notes">Notes</a></li>
+      <li><a href="#teaching">Teaching</a></li>
+      <li><a href="#misc">Misc</a></li>
+      <li><a href="./src/cv.pdf" target="_blank" rel="noopener">CV</a></li>
+    </ul>
+  </nav>
+
+  <main class="page">
+
+    <!-- ======== About ======== -->
+    <section id="about">
+      <div class="hero">
+        <div class="hero-photo">
+          <!-- for this photo use object-position: 70% top; -->
+          <img src="./photos/sf.jpg" alt="me"> 
+
+          <!--for this photo use object-position: 52% top;-->
+          <!-- <img src="./photos/sf2.jpg" alt="me">  -->
+
+          <!--for this photo use object-position: 0% top;-->
+          <!-- <img src="./photos/rijksmuseum.jpg" alt="me">  -->
         </div>
-        <p class="author">
-            <b>E-mail:</b> neelam[dot]akula[at]utdallas[dot]edu 
-            <br>
-            <b>Office:</b> BE 3.302B
-        </p>
+        <div class="hero-text">
+          <div class="hero-title-block">
+            <h1>Neelam Akula</h1>
+            <p class="subtitle">PhD Candidate &mdash; University of Texas at Dallas</p>
+          </div>
 
-        <hr>
-        <!-- <div class="topnav">
-                <a class="active" href="./index.html">About</a>
-                <a href="./research.html">Research</a>
-                <a href="./teaching.html">Teaching</a>
-                <a href="./personal.html">Personal</a>
+          <div class="contact-info">
+            <span>neelam[dot]akula[at]utdallas[dot]edu</span><br>
+            <span>Office: BE 3.302B &nbsp;&middot;&nbsp; Dallas, TX</span>
+          </div>
+
+          <!-- Social links -->
+          <div class="social-links">
+            <a href="https://github.com/avp-neelam/" target="_blank" rel="noopener" aria-label="GitHub">
+              <!-- GitHub SVG -->
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+              GitHub
+            </a>
+            <a href="https://www.linkedin.com/in/avpn" target="_blank" rel="noopener" aria-label="LinkedIn">
+              <!-- LinkedIn SVG -->
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              LinkedIn
+            </a>
+            <a href="https://scholar.google.com/citations?user=XKvo-LMAAAAJ&hl=en" target="_blank" rel="noopener" aria-label="Google Scholar">
+              <!-- Scholar cap SVG -->
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3 1 9l4 2.18V17h2v-4.82l1 .55V17c0 2.76 3.58 4 4 4s4-1.24 4-4v-4.27L19 11v3h2V9L12 3zm4.93 8.19L12 13.68l-4.93-2.49L5.06 10 12 6.32 18.94 10l-1.01 1.19z"/></svg>
+              Scholar
+            </a>
+          </div>
+
         </div>
-        <hr> -->
+      </div>
+      <p class="hero-bio">
+        I am a PhD candidate in mathematics at <a href="https://math.utdallas.edu/">UTD</a>,
+        advised by <a href="https://personal.utdallas.edu/~coskunuz/">Baris Coskunuzer</a>.
+        My research centers on <strong>Graph Representation Learning</strong> and Topological Machine Learning &mdash;
+        specifically on <strong>task transferability</strong> and <strong>interpretable/explainable ML</strong>
+        for graph foundation models. I am also actively working on trade network analysis.
+      </p>
+      <p class="hero-bio">
+        Previously, I was an undergraduate at <a href="https://www-math.umd.edu/">UMD</a>
+        (2019-2023) where I worked with <a href="https://www.math.umd.edu/~amingh">Amin Gholampour</a>
+        on the moduli space of quiver representations.
+        My undergraduate thesis: <em><a href="./src/quiver-AR-theory.pdf">Quiver Representations and Auslander-Reiten Theory</a></em>.
+      </p>
+    </section>
 
-    </header>
-    
-    <br>
+    <!-- ======== Research ======== -->
+    <section id="research">
+      <div class="section-rule"><h2>Research</h2></div>
 
-    <div style="display: flex; justify-content: center;  text-align: left;">
-        <div style="width: 85%;">
-            <p>
-                Welcome! I am a graduate student studying mathematics at the <a href="https://math.utdallas.edu/">University of Texas at Dallas</a>, where I am advised by <a href="https://personal.utdallas.edu/~coskunuz/">Baris Coskunuzer</a>. A copy of my CV can be found <a href="./src/cv.pdf">here</a>.
-                <br><br>
-                My current research interests center around <b>Graph Representation Learning</b> and Topological Machine Learning. I am working on <b>task transferability</b> and <b>interpretable/explainable ML</b> for graph foundational models. Recently I have begun working on trade network analysis.
-                <br><br>
-                Previously, I was an undergradute at the <a href="https://www-math.umd.edu/">University of Maryland</a> from 2019 to 2023 where I was advised by <a href="https://www.math.umd.edu/~amingh">Amin Gholampour</a>. My research centered around quivers, particularly moduli space of quiver representations and Auslander-Reiten theory.
-                <br><br>
-                My undergraduate thesis: <i><a href="./src/quiver-AR-theory.pdf">Quiver Representations and Auslander-Reiten Theory</a></i>.
-            </p>
-            <!-- <h4>Spring 2025 Office Hours:</h4>
-            <ul>
-                <li>Th 11:00 - 12:00;</li>
-                <li>Fr 10:00 - 11:00;</li>
-                <li>or by appointment.</li>
-            </ul> -->
-        </div>
-        <div style="margin-left: 20px;">
-            <img src="./photos/rijksmuseum.jpg" alt="Rijksmuseum, ND" width="280">
-            <p>
-                University of Texas at Dallas <br>
-                School of NSM, FN32 <br>
-                800 W. Campbell Rd. <br>
-                Richardson, TX 75080-3021
-            </p>
-        </div>
-    </div>
+      <!-- Published -->
+      <h3 class="pub-group-label">Published</h3>
+      <ul class="pub-list">
 
-    <article class="indent-pars">
-        <h3>Publications:</h3>
-        <ul>
-            <li><i><a >Same Graph Cross-Task Transfer in GNNs: Protocols and Predictors</a></i>, with Surbhi Kumar, Murat Kantarcioglu, and Baris Coskunuzer. <br><i>Accepted at ICML</i>, July 2026.</li>
-            <li><i><a href="./papers/node2graph.pdf">Node2Graph: Diagnosing task unification in graph learning</a></i>, with Varun Shiralkar and Baris Coskunuzer. <br><i>Accepted at PAKDD</i>, June 2026.</li>
-        </ul>
-        <!-- <ul>
-            <li><i><a >Input-Output Network Topology Reveals Persistent Structural Regimes in the Global Economy</a>, with Rayaan Ansari, Muhammed Yildrim, and Baris Coskunuzer. <br>In Preparation</i>, 2026.</li>
-            <li><i><a >Same Graph Cross-Task Transfer in GNNs: Protocols and Predictors</a>, with Surbhi Kumar, Murat Kantarcioglu, and Baris Coskunuzer. <br><i>Submitted</i>, 2026.</li>
-            <li><i><a >Graph Label Alignment: A Diagnostic Atlas for Graph Classification</a>, with Varun Shiralkar, Murat Kantarcioglu, and Baris Coskunuzer. <br><i>Submitted</i>, 2026.</li>
-            <li><i><a href="./papers/node2graph.pdf">Node2Graph: Diagnosing task unification in graph learning</a></i>, with Varun Shiralkar and Baris Coskunuzer. <br><i>To appear in the 30th Pacific-Asia Conference on Knowledge Discovery and Data Mining (PAKDD 2026)</i>, June 2026.</li>
-            <li><i><a href="./papers/p-reg-classes.pdf">On almost p-regular conjugacy classes</a></i>, with Matthew Lideros, Kawika O'Connor, Qian Yang, and Yong Yang. <br><i>Submitted</i>, 2025.</li>
-            <!-- <li><i><a href="./papers/node2graph.pdf">Detecting and Predicting Sleep Activity using Biometric Sensor Data</a></i>, with Maxwell Kleinsasser, Bronson Tharpe, Harshitha Tirumani, Rajshekhar Sunderraman, and Anu G. Bourgeois. <i>International Conference on COMmunication Systems NETworkS (COMSNETS)</i>, p 9-24, 2022.</li>
-        </ul> -->
-    </article>
+        <li class="pub-item">
+          <div class="pub-body">
+            <div class="pub-title">
+              Same Graph Cross-Task Transfer in GNNs: Protocols and Predictors
+            </div>
+            <div class="pub-authors">with Surbhi Kumar, Murat Kantarcioglu, and Baris Coskunuzer</div>
+            <div class="pub-venue">
+              <span class="venue-name">ICML 2026</span>
+              <span class="venue-detail"> &mdash; International Conference on Machine Learning, July 2026</span>
+            </div>
+            <div class="pub-links">
+              <a href="papers/ctt.pdf" class="pub-tag">paper</a>
+              <a href="https://github.com/avp-neelam/CrossTaskTransfer" class="pub-tag pub-tag-gh" target="_blank" rel="noopener">
+                <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" width="12" height="12"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+                code
+              </a>
+            </div>
+          </div>
+          <!--Optional Figure--><div class="pub-figure"><img src="papers/figs/ctt-hq.png" alt="Shared Latent Space"></div>
+        </li>
 
-    <article class="indent-pars">
-        <h3>Lecture Notes/Expository Papers:</h3>
-        <ul>
-            <li><a href="./notes/quiver_notes.pdf">Quiver Representations</a></li>
-            <li><a href="./notes/knitting-alg.pdf">The knitting algorithm for AD type quivers</a></li>
-            <li><a href="./notes/gabriels-theorem.pdf">A proof of Gabriel's theorem</a></li>
-            <li><a href="./notes/decimal-expansions.pdf">On decimal expansions of rational numbers</a></li>
-        </ul>
-    </article>
+        <li class="pub-item">
+          <div class="pub-body">
+            <div class="pub-title">
+              <a href="./papers/node2graph.pdf">Node2Graph: Diagnosing Task Unification in Graph Learning</a>
+            </div>
+            <div class="pub-authors">with Varun Shiralkar and Baris Coskunuzer</div>
+            <div class="pub-venue">
+              <span class="venue-name">PAKDD 2026</span>
+              <span class="venue-detail"> &mdash; Pacific-Asia Conference on Knowledge Discovery and Data Mining, June 2026</span>
+            </div>
+            <div class="pub-links">
+              <a href="./papers/n2g.pdf" class="pub-tag">paper</a>
+              <a href="https://github.com/avp-neelam/node2graph" class="pub-tag pub-tag-gh" target="_blank" rel="noopener">
+                <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" width="12" height="12"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+                code
+              </a>
+            </div>
+          </div>
+          <!-- Add a figure: <div class="pub-figure"><img src="papers/figs/" alt="..."></div> -->
+        </li>
 
-    <article class="indent-pars">
-        <h3>Miscellaneous:</h3>
-        <p>
-            Outside of academia I spend most of my time focusing on various aspects of electronic music (perhaps I'll have a more detailed page on this later); I am deeply interested in digital signal processing, <a href="https://cdn.modulargrid.net/img/racks/modulargrid_3109096.jpg">modular synthesis</a>, and VST/Plug-In emulation.
-        </p>
-        <ul>
-            <li><a href="https://mathshistory.st-andrews.ac.uk/">MacTutor</a> - A compendium of mathematical history and biographies.</li>
-            <li>Free <a href="https://cain.math.gatech.edu/textbooks/onlinebooks.html">textbooks</a> for a variety of mathematical topics.</li>
-            <li>Keith Conrad's <a href="https://kconrad.math.uconn.edu/blurbs/">expository papers</a>.</li>
-            <li>A <a href="https://www.forkinganddividing.com/">map of the universe</a>.</li>
-        </ul>
-    </article>
+      </ul>
 
-    <hr>
+      <!-- In Preparation / Submitted -->
+      <h3 class="pub-group-label" style="margin-top:1.8rem;">In Preparation & Submitted</h3>
+      <ul class="pub-list">
 
-    <footer>
-        <small>
-            &copy; 2026 Neelam Akula
-            <br>
-            <i>Last updated: <script>document.write(document.lastModified);</script></i>
-        </small>
-    </footer>
+        <li class="pub-item pub-item-wip">
+          <div class="pub-body">
+            <div class="pub-title">
+              Input-Output Network Topology Reveals Persistent Structural Regimes in the Global Economy
+            </div>
+            <div class="pub-authors">with Rayaan Ansari, Muhammed Ali Yildirim, and Baris Coskunuzer</div>
+            <div class="pub-venue">
+              <span class="venue-detail">In preparation, 2026</span>
+            </div>
+          </div>
+          <!-- Optional Figure<div class="pub-figure"><img src="papers/figs/tdi-hq.png" alt="Heatmap of TDI scores"></div> -->
+        </li>
+
+        <li class="pub-item pub-item-wip">
+          <div class="pub-body">
+            <div class="pub-title">
+              Graph Label Alignment: A Diagnostic Atlas for Graph Classification
+            </div>
+            <div class="pub-authors">with Varun Shiralkar and Baris Coskunuzer</div>
+            <div class="pub-venue">
+              <span class="venue-detail">Submitted, 2026</span>
+            </div>
+          </div>
+          <!-- Add a figure: <div class="pub-figure"><img src="papers/figs/" alt="..."></div> -->
+        </li>
+
+      </ul>
+    </section>
+
+    <!-- ======== Notes ======== -->
+    <section id="notes">
+      <div class="section-rule"><h2>Lecture Notes & Expository Writing</h2></div>
+      <ul class="item-list">
+        <li><a href="./notes/quiver_notes.pdf">Quiver Representation Theory</a></li>
+        <li><a href="./notes/knitting-alg.pdf">The knitting algorithm for AD type quivers</a></li>
+        <li><a href="./notes/gabriels-theorem.pdf">A proof of Gabriel's theorem</a></li>
+        <li><a href="./notes/decimal-expansions.pdf">On decimal expansions of rational numbers</a></li>
+      </ul>
+    </section>
+
+    <!-- ======== Teaching ======== -->
+    <section id="teaching">
+      <div class="section-rule"><h2>Teaching</h2></div>
+      <!-- <p style="font-size:0.96rem; color:var(--text-muted); margin-bottom:1rem;">
+        I have served as instructor and teaching assistant across a range of undergraduate and graduate courses at UTD and UMD.
+      </p> -->
+      <ul class="teaching-list">
+        <li class="teaching-item">
+          <span class="teaching-role">TA</span>
+          <span>MATH 2418 &mdash; Linear Algebra, UTD (F23, F24, S25, S26)</span>
+        </li>
+        <li class="teaching-item">
+          <span class="teaching-role"></span>
+          <span>MATH 2414 &mdash; Integral Calc, UTD (S24)</span>
+        </li>
+        <li class="teaching-item">
+          <span class="teaching-role"></span>
+          <span>MATH 2413 &mdash; Differential Calc, UTD (F25)</span>
+        </li>
+        <li class="teaching-item">
+          <span class="teaching-role">Instructor</span>
+          <span><a href="./teaching/299Q/index.html">MATH 299Q</a> &mdash; Quiver Representations, UMD (S23)</span>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ======== Misc ======== -->
+    <section id="misc">
+      <div class="section-rule"><h2>Miscellaneous</h2></div>
+      <p style="font-size:0.96rem; margin-bottom:1rem;">
+        Outside of research, I spend a lot of time on electronic music production, digital signal processing,
+        <a href="https://cdn.modulargrid.net/img/racks/modulargrid_3109096.jpg">modular synthesis</a>,
+        VST/plug-in development, and analog emulation. I also read a lot, mostly literary fiction and philosophy,
+        and recently have started tracking it on <a href="https://www.goodreads.com/user/show/194231414-avp-n" target="_blank" rel="noopener">Goodreads</a>
+        (for now &mdash; I've been meaning to migrate to <a href="https://app.thestorygraph.com/" target="_blank" rel="noopener">StoryGraph</a>).
+      </p>
+      <ul class="item-list">
+        <li>Free <a href="https://cain.math.gatech.edu/textbooks/onlinebooks.html">mathematics textbooks</a> from Georgia Tech</li>
+        <li>Keith Conrad's <a href="https://kconrad.math.uconn.edu/blurbs/">expository papers</a></li>
+        <li>A <a href="https://www.forkinganddividing.com/">map of the (model-theoretic) universe</a></li>
+      </ul>
+    </section>
+
+  </main>
+
+  <!-- Lightbox overlay -->
+  <div id="lightbox" role="dialog" aria-modal="true" aria-label="Enlarged figure">
+    <img id="lightbox-img" src="" alt="">
+  </div>
+
+  <footer>
+    <small>
+      &copy; 2026 Neelam Akula &nbsp;&middot;&nbsp;
+      <em>Last updated: <script>document.write(document.lastModified);</script></em>
+    </small>
+  </footer>
+
+  <!-- ============================================================
+       Graph background canvas — nodes spawn/die with fade, cursor
+       repulsion, evolving edges, higher degree.
+  ============================================================ -->
+  <script>
+  (function () {
+    const canvas = document.getElementById('graph-bg');
+    const ctx    = canvas.getContext('2d');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // ---- Tunables ----
+    const TARGET_NODES = 85;    // steady-state node count
+    const EDGE_DIST    = 240;   // max px for an edge
+    const BASE_SPEED   = 0.28;  // base drift speed
+    const MIN_LIFE     = 1800;  // frames (~30s at 60fps)
+    const MAX_LIFE     = 3600;  // frames (~60s at 60fps)
+    const FADE_FRAMES  = 90;    // frames to fade in/out
+    const REPEL_RADIUS = 120;   // px — cursor repulsion range
+    const REPEL_FORCE  = 2.8;   // strength of push
+    const REPEL_DECAY  = 0.88;  // velocity decay per frame (friction)
+
+    let W, H, nodes = [], rafId, nodeIdCounter = 0;
+    let mouseX = -9999, mouseY = -9999; // document coordinates
+
+    function getAccentColor() {
+      // Dark mode: warm gold. Light mode: a muted slate-rose that reads as
+      // intentional design rather than accidental marks against the cream bg.
+      return window.matchMedia('(prefers-color-scheme: dark)').matches
+        ? '#e8d5a3' : '#8a6a6a';
+    }
+
+    function resize() {
+      W = canvas.width  = window.innerWidth;
+      H = canvas.height = Math.max(
+        document.documentElement.scrollHeight,
+        document.body.scrollHeight,
+        window.innerHeight
+      );
+    }
+
+    function spawnNode(x, y) {
+      const angle = Math.random() * Math.PI * 2;
+      const speed = (0.5 + Math.random() * 0.8) * BASE_SPEED;
+      return {
+        id:  nodeIdCounter++,
+        x:   x  ?? Math.random() * W,
+        y:   y  ?? Math.random() * H,
+        // base drift — constant, never decays
+        vx:  Math.cos(angle) * speed,
+        vy:  Math.sin(angle) * speed,
+        // repulsion impulse — decays to zero between interactions
+        rx:  0,
+        ry:  0,
+        r:   Math.random() * 2 + 1.4,
+        age: 0,
+        maxAge: MIN_LIFE + Math.random() * (MAX_LIFE - MIN_LIFE),
+        alpha: 0,
+      };
+    }
+
+    function initNodes() {
+      nodes = [];
+      for (let i = 0; i < TARGET_NODES; i++) {
+        const n = spawnNode();
+        n.age   = Math.random() * n.maxAge;
+        n.alpha = 1;
+        n.rx = 0; n.ry = 0;
+        nodes.push(n);
+      }
+    }
+
+    // ---- Edge alpha cache ----
+    // Keyed by stable node IDs (not array indices) so removing a node never
+    // causes a mass-blink of all other edges.
+    const edgeMap = new Map(); // key: "id_a,id_b" -> current alpha
+    function edgeKey(a, b) { return a.id < b.id ? `${a.id},${b.id}` : `${b.id},${a.id}`; }
+
+    function update() {
+      // Spawn new nodes — probability scales with deficit so the graph
+      // recovers quickly from any population drop
+      if (!reduceMotion) {
+        const deficit = TARGET_NODES - nodes.length;
+        if (deficit > 0 && Math.random() < Math.min(0.85, deficit * 0.03)) {
+          nodes.push(spawnNode());
+        }
+      }
+
+      const toRemove = new Set();
+
+      for (let i = 0; i < nodes.length; i++) {
+        const n = nodes[i];
+        n.age++;
+
+        // Fade in
+        if (n.age < FADE_FRAMES) {
+          n.alpha = n.age / FADE_FRAMES;
+        }
+        // Fade out
+        else if (n.age > n.maxAge - FADE_FRAMES) {
+          n.alpha = Math.max(0, (n.maxAge - n.age) / FADE_FRAMES);
+        }
+        else {
+          n.alpha = 1;
+        }
+
+        // Mark dead
+        if (n.age >= n.maxAge) {
+          toRemove.add(i);
+          continue;
+        }
+
+        // Cursor repulsion — applied to impulse component only
+        const rdx = n.x - mouseX, rdy = n.y - mouseY;
+        const rd  = Math.sqrt(rdx * rdx + rdy * rdy);
+        if (rd < REPEL_RADIUS && rd > 0.01) {
+          const force = (1 - rd / REPEL_RADIUS) * REPEL_FORCE;
+          n.rx += (rdx / rd) * force;
+          n.ry += (rdy / rd) * force;
+        }
+
+        // Decay only the repulsion impulse
+        n.rx *= REPEL_DECAY;
+        n.ry *= REPEL_DECAY;
+
+        // Clamp repulsion impulse
+        const rspd = Math.sqrt(n.rx * n.rx + n.ry * n.ry);
+        const maxR = BASE_SPEED * 8;
+        if (rspd > maxR) { n.rx = (n.rx / rspd) * maxR; n.ry = (n.ry / rspd) * maxR; }
+
+        // Move: base drift + repulsion impulse
+        n.x += n.vx + n.rx;
+        n.y += n.vy + n.ry;
+
+        // Bounce base drift off walls
+        if (n.x < 0)  { n.x = 0;  n.vx =  Math.abs(n.vx); n.rx = 0; }
+        if (n.x > W)  { n.x = W;  n.vx = -Math.abs(n.vx); n.rx = 0; }
+        if (n.y < 0)  { n.y = 0;  n.vy =  Math.abs(n.vy); n.ry = 0; }
+        if (n.y > H)  { n.y = H;  n.vy = -Math.abs(n.vy); n.ry = 0; }
+      }
+
+      // Remove dead nodes; clean up only their edge entries
+      if (toRemove.size) {
+        const deadIds = new Set(
+          [...toRemove].map(i => nodes[i].id)
+        );
+        nodes = nodes.filter((_, i) => !toRemove.has(i));
+        for (const key of edgeMap.keys()) {
+          const [a, b] = key.split(',').map(Number);
+          if (deadIds.has(a) || deadIds.has(b)) edgeMap.delete(key);
+        }
+      }
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      const col = getAccentColor();
+
+      // ---- Edges ----
+      ctx.strokeStyle = col;
+      ctx.lineWidth   = 1.2;
+
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const dx = nodes[i].x - nodes[j].x;
+          const dy = nodes[i].y - nodes[j].y;
+          const d  = Math.sqrt(dx * dx + dy * dy);
+
+          const key = edgeKey(nodes[i], nodes[j]);
+          // Target alpha: distance falloff * both node alphas
+          const targetA = d < EDGE_DIST
+            ? (1 - d / EDGE_DIST) * nodes[i].alpha * nodes[j].alpha
+            : 0;
+
+          // Smooth interpolation toward target (edge evolution)
+          const cur = edgeMap.get(key) ?? 0;
+          const next = cur + (targetA - cur) * 0.04;
+          if (next < 0.004) { edgeMap.delete(key); continue; }
+          edgeMap.set(key, next);
+
+          ctx.globalAlpha = next;
+          ctx.beginPath();
+          ctx.moveTo(nodes[i].x, nodes[i].y);
+          ctx.lineTo(nodes[j].x, nodes[j].y);
+          ctx.stroke();
+        }
+      }
+
+      // ---- Nodes ----
+      ctx.fillStyle = col;
+      for (const n of nodes) {
+        ctx.globalAlpha = n.alpha * 0.85;
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      ctx.globalAlpha = 1;
+    }
+
+    function loop() {
+      update();
+      draw();
+      rafId = requestAnimationFrame(loop);
+    }
+
+    // Mouse tracking — convert to document coordinates
+    window.addEventListener('mousemove', e => {
+      mouseX = e.clientX;
+      mouseY = e.clientY + window.scrollY;
+    });
+    window.addEventListener('mouseleave', () => {
+      mouseX = -9999; mouseY = -9999;
+    });
+
+    // Resize (debounced)
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        cancelAnimationFrame(rafId);
+        resize();
+        // Don't reinit nodes — just clamp positions to new bounds
+        nodes.forEach(n => {
+          n.x = Math.min(n.x, W);
+          n.y = Math.min(n.y, H);
+        });
+        reduceMotion ? draw() : loop();
+      }, 200);
+    });
+
+    resize();
+    initNodes();
+
+    if (reduceMotion) {
+      draw();
+    } else {
+      loop();
+    }
+  })();
+  </script>
+
+  <!-- Highlight active nav link on scroll -->
+  <script>
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('nav.site-nav a[href^="#"]');
+    const NAV_H = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-height')) || 52;
+
+    function onScroll() {
+      let current = '';
+      sections.forEach(sec => {
+        if (window.scrollY >= sec.offsetTop - NAV_H - 32) {
+          current = sec.getAttribute('id');
+        }
+      });
+      navLinks.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+      });
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  </script>
+
+  <!-- Lightbox script -->
+  <script>
+  (function () {
+    const lb    = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lightbox-img');
+
+    function open(src, alt) {
+      lbImg.src = src;
+      lbImg.alt = alt || '';
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function close() {
+      lb.classList.remove('open');
+      document.body.style.overflow = '';
+      lbImg.src = '';
+    }
+
+    // Clicking the backdrop closes; clicking the image itself does nothing
+    lb.addEventListener('click', function (e) {
+      if (e.target !== lbImg) close();
+    });
+
+    // Escape key also closes
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') close();
+    });
+
+    // Wire up all pub-figure images
+    document.querySelectorAll('.pub-figure img').forEach(function (img) {
+      img.addEventListener('click', function () {
+        open(img.src, img.alt);
+      });
+    });
+  })();
+  </script>
+
 </body>
-
 </html>
