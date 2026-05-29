@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/png" href="./src/tetro.png">
+  <title>tetromino &mdash; music</title>
+  <link rel="stylesheet" href="./src/style.css">
+  <style>
+    /* ---- Moniker header ---- */
+    .moniker-header { margin-bottom: 0.5rem; text-align: center; }
+    .moniker-header h1 {
+      font-family: var(--font-mono);
+      font-size: 2.4rem;
+      font-weight: normal;
+      font-style: normal;
+      letter-spacing: 0.22em;
+      text-transform: lowercase;
+      line-height: 1.1;
+      color: var(--text);
+      text-shadow:
+        0 0 18px color-mix(in srgb, var(--accent) 35%, transparent),
+        0 0 40px color-mix(in srgb, var(--accent) 15%, transparent);
+    }
+    .moniker-header .moniker-sub {
+      font-size: 0.88rem;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      margin-top: 0.3rem;
+    }
+
+    /* ---- Social links row ---- */
+    .music-socials {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 0.75rem;
+      margin: 1rem 0 0;
+      justify-content: center;
+    }
+    .music-socials a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 0.2rem 0.55rem;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .music-socials a:hover { color: var(--accent); border-color: var(--accent); }
+    .music-socials svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+    /* ---- EQ visualizer ---- */
+    .visualizer-wrap {
+      margin: 1.8rem 0 2.2rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      background: var(--surface);
+      height: 72px;
+      position: relative;
+    }
+    #eq-canvas { width: 100%; height: 100%; display: block; }
+    .visualizer-label {
+      position: absolute;
+      bottom: 6px; right: 9px;
+      font-size: 0.65rem;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+      opacity: 0.45;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      pointer-events: none;
+    }
+    .vis-live-dot {
+      position: absolute;
+      top: 7px; right: 9px;
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--accent);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+    .vis-live-dot.active { opacity: 1; animation: pulse-dot 1.4s ease-in-out infinite; }
+    @keyframes pulse-dot {
+      0%, 100% { transform: scale(1); opacity: 0.9; }
+      50%       { transform: scale(1.5); opacity: 0.4; }
+    }
+
+    /* ---- About ---- */
+    .music-bio {
+      text-align: justify;
+      hyphens: auto;
+      -webkit-hyphens: auto;
+      font-size: 0.975rem;
+      line-height: 1.85;
+      margin-bottom: 0.9rem;
+    }
+
+    /* ---- Section rule with right-side link ---- */
+    .section-rule-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.4rem;
+    }
+    .section-rule-wrap h2 {
+      font-size: 1.15rem;
+      font-weight: bold;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      color: var(--text);
+    }
+    .section-rule-wrap::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--rule);
+    }
+    .section-rule-link {
+      font-size: 0.8rem;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+      text-decoration: none;
+      white-space: nowrap;
+      transition: color 0.15s;
+      flex-shrink: 0;
+      order: 3; /* after the rule line */
+    }
+    .section-rule-link:hover { color: var(--accent); }
+
+    /* ---- Release cards ---- */
+    .releases-grid { display: flex; flex-direction: column; gap: 1.6rem; }
+
+    .release-card {
+      display: flex;
+      gap: 1.3rem;
+      padding: 1.2rem 1.3rem;
+      background: var(--surface);
+      border-left: 2px solid var(--accent);
+      border-radius: 0 4px 4px 0;
+    }
+
+    .release-card-art {
+      flex-shrink: 0;
+      width: 120px;
+      height: 120px;
+    }
+    .release-art-placeholder {
+      width: 100%; height: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .release-art-placeholder svg {
+      width: 56px; height: 56px;
+      color: var(--accent);
+      opacity: 0.25;
+    }
+    .release-card-art img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      border-radius: 3px;
+      border: 1px solid var(--border);
+      display: block;
+    }
+
+    .release-card-body { flex: 1; min-width: 0; }
+
+    .release-card-header {
+      display: flex;
+      align-items: baseline;
+      gap: 0.55rem;
+      margin-bottom: 0.35rem;
+      flex-wrap: wrap;
+    }
+    .release-type-badge {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.14em;
+      padding: 0.08rem 0.4rem;
+      border: 1px solid var(--accent);
+      border-radius: 2px;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+    .release-card-title {
+      font-style: italic;
+      font-size: 0.975rem;
+      font-weight: bold;
+    }
+    .release-card-year {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      margin-left: auto;
+    }
+    .release-card-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 0.7rem;
+      line-height: 1.6;
+    }
+
+    /* Tracks inside a release card — more compact */
+    .release-tracks { display: flex; flex-direction: column; gap: 0.5rem; }
+    .release-tracks .track-item {
+      padding: 0.55rem 0.8rem;
+      border-left: 1px solid var(--border);
+      background: var(--bg);
+      border-radius: 0 3px 3px 0;
+    }
+    .release-tracks .track-item .track-desc { margin-bottom: 0.5rem; }
+
+    /* ---- Standalone track cards ---- */
+    .track-grid { display: flex; flex-direction: column; gap: 0.8rem; }
+    .track-item {
+      padding: 0.9rem 1.1rem;
+      border-left: 2px solid var(--accent);
+      background: var(--surface);
+      border-radius: 0 4px 4px 0;
+    }
+    .track-item.track-wip { border-left-color: var(--border); opacity: 0.76; }
+
+    .track-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.3rem;
+    }
+    .track-title { font-style: italic; font-size: 0.975rem; }
+    .track-meta  { font-size: 0.82rem; color: var(--text-muted); font-family: var(--font-mono); white-space: nowrap; }
+    .track-desc  { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 0.75rem; line-height: 1.6; }
+
+    /* ---- Genre pills ---- */
+    .tag-pill {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-family: var(--font-mono);
+      padding: 0.1rem 0.45rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+      margin-right: 0.3rem;
+    }
+
+    /* ---- Custom audio player ---- */
+    .audio-player {
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0.6rem 0.85rem;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      user-select: none;
+    }
+    .ap-btn {
+      flex-shrink: 0;
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: color 0.15s, border-color 0.15s;
+      padding: 0;
+    }
+    .ap-btn:hover { color: var(--accent); border-color: var(--accent); }
+    .ap-btn svg { width: 12px; height: 12px; }
+    .ap-progress-wrap {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.28rem;
+      min-width: 0;
+    }
+    .ap-seekbar {
+      width: 100%;
+      -webkit-appearance: none;
+      appearance: none;
+      height: 3px;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    .ap-seekbar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      cursor: pointer;
+      transition: transform 0.1s;
+    }
+    .ap-seekbar::-moz-range-thumb {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: none;
+      cursor: pointer;
+    }
+    .ap-seekbar:hover::-webkit-slider-thumb { transform: scale(1.3); }
+    .ap-time {
+      font-size: 0.7rem;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* ---- WIP placeholder ---- */
+    .track-placeholder {
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      background: var(--bg);
+    }
+
+    /* ---- Gear section ---- */
+    .gear-grid { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.6rem; }
+
+    @media (max-width: 600px) {
+      .moniker-header h1 { font-size: 2rem; }
+      .track-header { flex-direction: column; gap: 0.1rem; }
+      .release-card { flex-direction: column; }
+      .release-card-art { width: 100%; height: 80px; }
+      .release-art-placeholder { height: 80px; }
+      .release-card-art img { height: 80px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <canvas id="graph-bg" aria-hidden="true"></canvas>
+
+  <nav class="site-nav" aria-label="Site navigation">
+    <ul>
+      <li><a href="./index.html">← main</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#releases">Releases</a></li>
+      <li><a href="./tetro/">Tracks</a></li>
+      <li><a href="#gear">Gear</a></li>
+    </ul>
+  </nav>
+
+  <main class="page">
+
+    <!-- ======== About ======== -->
+    <section id="about">
+      <div class="moniker-header">
+        <h1>tetromino</h1>
+        <p class="moniker-sub">electronic music</p>
+      </div>
+
+      <div class="music-socials">
+        <a href="https://x.com/tetr0mino_x" target="_blank" rel="noopener" aria-label="Twitter / X">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.912-5.622Zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          Twitter / X
+        </a>
+        <a href="https://www.youtube.com/@tetr0mino-yt" target="_blank" rel="noopener" aria-label="YouTube">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          YouTube
+        </a>
+        <a href="https://soundcloud.com/tetr0mino" target="_blank" rel="noopener" aria-label="SoundCloud">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M1.175 12.225c-.015.109-.03.218-.03.332 0 .114.015.223.03.332l-.03.338c0 .114.015.228.03.337.03 1.662 1.39 3.001 3.058 3.001h.338V9.212c-.11-.015-.228-.03-.338-.03C2.562 9.182 1.19 10.555 1.175 12.225zM6.376 8.01v8.498h10.25c1.658 0 3.001-1.343 3.001-3.001 0-1.418-.99-2.607-2.312-2.932a4.007 4.007 0 0 0 .083-.817c0-2.218-1.797-4.016-4.016-4.016-1.125 0-2.138.465-2.876 1.21A2.994 2.994 0 0 0 8.37 6.01a2.994 2.994 0 0 0-2.994 2z"/></svg>
+          SoundCloud
+        </a>
+        <a href="https://tetr0mino.bandcamp.com/" target="_blank" rel="noopener" aria-label="Bandcamp">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M0 18.75l7.437-13.5H24l-7.438 13.5z"/></svg>
+          Bandcamp
+        </a>
+      </div>
+
+      <div class="visualizer-wrap" aria-hidden="true">
+        <canvas id="eq-canvas"></canvas>
+        <span class="vis-live-dot" id="vis-dot"></span>
+        <span class="visualizer-label">tetromino</span>
+      </div>
+
+      <p class="music-bio">
+        <strong>tetromino</strong> is the name I release music under. The term comes from
+        <a href="https://en.wikipedia.org/wiki/Tetromino" target="_blank" rel="noopener noreferrer">tetrominoes</a>,
+        one class of <a href="https://en.wikipedia.org/wiki/Polyomino" target="_blank" rel="noopener noreferrer">polyominoes</a>:
+        geometric objects formed by joining equal squares edge-to-edge. A lot of electronic music is built from repeating measures and modular patterns, especially in 4/4,
+        so the connection felt natural without needing to be too literal about it. Loops lock together,
+        sequences shift against each other, small changes reorganize the whole structure. That relationship
+        between rigor and emergence is probably the closest thing to a unifying thread in the music I make.
+      </p>
+
+      <p class="music-bio">
+        Sonically, my music drifts towards EDM, IDM, ambient, experimental, and more rhythmically driven material.
+        I'm usually more interested in melodies, but recent ventures into modular synthesis have drawn me more into texture and spatial detail.
+      </p>
+    </section>
+
+    <!-- ======== Releases ======== -->
+    <section id="releases">
+      <div class="section-rule"><h2>Releases</h2></div>
+
+      <!--
+        HOW TO ADD A RELEASE:
+        - Set data-type to "album", "ep", or "single"
+        - Add data-art="./music/covers/name.jpg" to show cover art (optional)
+        - For EPs/Albums: add multiple .track-item[data-src] inside .release-tracks
+        - For Singles: add one .track-item[data-src] inside .release-tracks
+      -->
+
+      <div class="releases-grid">
+
+        <!-- ── Featured Album ──────────────────────────── -->
+        <!--
+        <div class="release-card" data-type="album">
+          <div class="release-card-art">
+            <div class="release-art-placeholder">
+              <svg viewBox="0 0 40 40" fill="currentColor" aria-hidden="true">
+                <rect x="4"  y="4"  width="15" height="15" rx="1"/>
+                <rect x="21" y="4"  width="15" height="15" rx="1"/>
+                <rect x="4"  y="21" width="15" height="15" rx="1"/>
+              </svg>
+            </div>
+          </div>
+          <div class="release-card-body">
+            <div class="release-card-header">
+              <span class="release-type-badge">ALBUM</span>
+              <span class="release-card-title">Album Title</span>
+              <span class="release-card-year">2025</span>
+            </div>
+            <p class="release-card-desc">Album description.</p>
+            <div class="release-tracks">
+              <div class="track-item" data-src="./music/filename.m4a">
+                <div class="track-header">
+                  <span class="track-title">Track One</span>
+                  <span class="track-meta">1</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        -->
+
+        <!-- ── Featured EP ────────────────────────────── -->
+        <!--
+        <div class="release-card" data-type="ep">
+          <div class="release-card-art">
+            <div class="release-art-placeholder">
+              <svg viewBox="0 0 40 40" fill="currentColor" aria-hidden="true">
+                <rect x="4"  y="4"  width="15" height="15" rx="1"/>
+                <rect x="21" y="4"  width="15" height="15" rx="1"/>
+                <rect x="4"  y="21" width="15" height="15" rx="1"/>
+              </svg>
+            </div>
+          </div>
+          <div class="release-card-body">
+            <div class="release-card-header">
+              <span class="release-type-badge">EP</span>
+              <span class="release-card-title">EP Title</span>
+              <span class="release-card-year">2025</span>
+            </div>
+            <p class="release-card-desc">EP description.</p>
+            <div class="release-tracks">
+              <div class="track-item" data-src="./music/filename.m4a">
+                <div class="track-header">
+                  <span class="track-title">Track One</span>
+                  <span class="track-meta">1</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        -->
+
+        <!-- ── Featured Single ────────────────────────── -->
+        
+        <div class="release-card" data-type="single">
+          <div class="release-card-art">
+            <div class="release-art-placeholder">
+              <img src="music/Entropy/entropy.png">
+            </div>
+          </div>
+          <div class="release-card-body">
+            <div class="release-card-header">
+              <span class="release-type-badge">EP</span>
+              <span class="release-card-title"><a href="/tetro/index.html#eps">Entropy</a></span>
+              <span class="release-card-year">2026</span>
+            </div>
+            <p class="release-card-desc">the irreversible rhythm of everything scattering into the unknown</p>
+            <div class="release-tracks">
+              <div class="track-item" data-src="./music/Entropy/Original Mix.m4a">
+                <div class="track-header">
+                  <span class="track-title">Entropy - Original Mix</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+       
+        <!-- <p style="font-size:0.88rem; color:var(--text-muted); font-family:var(--font-mono);">
+          [ releases coming soon &mdash; uncomment a block above to add one ]
+        </p> -->
+
+      </div>
+    </section>
+
+    <!-- ======== Tracks ======== -->
+    <section id="tracks">
+      <div class="section-rule-wrap">
+        <h2>Tracks</h2>
+        <a class="section-rule-link" href="./tetro/">view all →</a>
+      </div>
+
+      <!--
+        HOW TO ADD A TRACK:
+        1. Drop audio file into ./music/ (e.g. ./music/track-name.m4a)
+        2. Copy a .track-item block, set data-src, update title/year/desc/tags.
+        3. WIP tracks: use .track-wip class and .track-placeholder div instead.
+      -->
+
+      <div class="track-grid">
+
+        <div class="track-item" data-src="../music/Seatbelt (Instrumental Mix).m4a">
+          <div class="track-header">
+            <span class="track-title">Seatbelt (Instrumental Mix) [Demo]</span>
+            <span class="track-meta">2026</span>
+          </div>
+          <div class="track-desc">
+            demo track, actively looking for vocals<br>
+            <span class="tag-pill">progressive house</span>
+            <span class="tag-pill">128</span>
+            <span class="tag-pill">Am</span>
+          </div>
+        </div>
+
+        <div class="track-item" data-src="../music/Amsterdam.wav">
+          <div class="track-header">
+            <span class="track-title">Amsterdam</span>
+            <span class="track-meta">2025</span>
+          </div>
+          <div class="track-desc">
+            <span class="tag-pill">electronic</span>
+            <span class="tag-pill">downtempo</span>
+            <span class="tag-pill">116</span>
+            <span class="tag-pill">Am</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======== Gear ======== -->
+    <section id="gear">
+      <div class="section-rule"><h2>Gear &amp; Tools</h2></div>
+      <p style="font-size:0.96rem; margin-bottom:0.8rem;">
+        Production splits between a DAW-based setup, a modular eurorack system, and analog synthesizers. Most tracks
+        involve some combination of hardware synthesis, software instruments, and a lot of time on
+        mixing and sound design.
+      </p>
+
+      <p>
+        Along the development of my own music, I've needed highly niche software/plug-ins (most often for live performance and clocking).
+        Perhaps one day I'll setup a plug-in/M4L page..
+      </p>
+      <div class="gear-grid">
+        <span class="tag-pill">Ableton Live</span>
+        <span class="tag-pill">eurorack</span>
+        <span class="tag-pill">Max/MSP</span>
+        <span class="tag-pill">analog synthesis</span>
+        <span class="tag-pill">VST development / JUCE</span>
+        <span class="tag-pill">DSP</span>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <small>
+      &copy; 2026 tetromino / Neelam Akula &nbsp;&middot;&nbsp;
+      <a href="./index.html" style="color:var(--text-muted); text-decoration:none;">main site</a>
+    </small>
+  </footer>
+
+  <!-- ============================================================
+       Shared beat state — read by graph, written by audio script
+  ============================================================ -->
+  <script>
+    window._tetroBeat = { kick: 0, seq: 0 };
+  </script>
+
+  <!-- ============================================================
+       Graph background — kick-reactive
+       On kick: nodes get an outward radial impulse from canvas center.
+       Edges briefly thicken. Both decay naturally each frame.
+  ============================================================ -->
+  <script>
+  (function () {
+    const canvas = document.getElementById('graph-bg');
+    const ctx    = canvas.getContext('2d');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const TARGET_NODES  = 140;
+    const EDGE_DIST     = 300;
+    const BASE_SPEED    = 0.28;
+    const MIN_LIFE      = 1800;
+    const MAX_LIFE      = 3600;
+    const FADE_FRAMES   = 90;
+    const REPEL_RADIUS  = 120;
+    const REPEL_FORCE   = 2.8;
+    const REPEL_DECAY   = 0.88;
+    const KICK_IMPULSE   = 10;   // one-shot impulse per kick (px, unclamped)
+    const KICK_DECAY     = 0.82; // per-node kick component decay per frame
+    const KICK_VIS_DECAY = 0.80; // visual beat value decay (edges/nodes)
+
+    let W, H, nodes = [], rafId, nodeIdCounter = 0, lastKickSeq = 0;
+    let mouseX = -9999, mouseY = -9999;
+
+    function getAccentColor() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? '#e8d5a3' : '#8a6a6a';
+    }
+
+    function resize() {
+      W = canvas.width  = window.innerWidth;
+      H = canvas.height = Math.max(
+        document.documentElement.scrollHeight,
+        document.body.scrollHeight,
+        window.innerHeight
+      );
+    }
+
+    function spawnNode(x, y) {
+      const angle = Math.random() * Math.PI * 2;
+      const speed = (0.5 + Math.random() * 0.8) * BASE_SPEED;
+      return {
+        id:  nodeIdCounter++,
+        x:   x ?? Math.random() * W,
+        y:   y ?? Math.random() * H,
+        vx:  Math.cos(angle) * speed,
+        vy:  Math.sin(angle) * speed,
+        rx:  0, ry: 0, kx: 0, ky: 0,
+        r:   Math.random() * 2 + 1.4,
+        age: 0,
+        maxAge: MIN_LIFE + Math.random() * (MAX_LIFE - MIN_LIFE),
+        alpha: 0,
+      };
+    }
+
+    function initNodes() {
+      nodes = [];
+      for (let i = 0; i < TARGET_NODES; i++) {
+        const n = spawnNode();
+        n.age   = Math.random() * n.maxAge;
+        n.alpha = 1;
+        nodes.push(n);
+      }
+    }
+
+    const edgeMap = new Map();
+    function edgeKey(a, b) { return a.id < b.id ? `${a.id},${b.id}` : `${b.id},${a.id}`; }
+
+    function update() {
+      // Spawn
+      if (!reduceMotion) {
+        const deficit = TARGET_NODES - nodes.length;
+        if (deficit > 0 && Math.random() < Math.min(0.85, deficit * 0.03))
+          nodes.push(spawnNode());
+      }
+
+      // One-shot kick impulse via sequence counter
+      const beat = window._tetroBeat;
+      if (beat.seq !== lastKickSeq) {
+        lastKickSeq = beat.seq;
+        beat.kick = 1.0;
+        const cx = W / 2, cy = window.scrollY + window.innerHeight / 2;
+        for (const n of nodes) {
+          const angle = Math.random() * Math.PI * 2;
+          n.kx += Math.cos(angle) * KICK_IMPULSE;
+          n.ky += Math.sin(angle) * KICK_IMPULSE;
+        }
+      }
+      if (beat.kick > 0.01) beat.kick *= KICK_VIS_DECAY; else beat.kick = 0;
+
+      const toRemove = new Set();
+      for (let i = 0; i < nodes.length; i++) {
+        const n = nodes[i];
+        n.age++;
+
+        if (n.age < FADE_FRAMES) n.alpha = n.age / FADE_FRAMES;
+        else if (n.age > n.maxAge - FADE_FRAMES) n.alpha = Math.max(0, (n.maxAge - n.age) / FADE_FRAMES);
+        else n.alpha = 1;
+
+        if (n.age >= n.maxAge) { toRemove.add(i); continue; }
+
+        // Mouse repulsion
+        const rdx = n.x - mouseX, rdy = n.y - mouseY;
+        const rd  = Math.sqrt(rdx * rdx + rdy * rdy);
+        if (rd < REPEL_RADIUS && rd > 0.01) {
+          const f = (1 - rd / REPEL_RADIUS) * REPEL_FORCE;
+          n.rx += (rdx / rd) * f;
+          n.ry += (rdy / rd) * f;
+        }
+
+        // Cursor repulsion: decay + clamp
+        n.rx *= REPEL_DECAY;
+        n.ry *= REPEL_DECAY;
+        const rspd = Math.sqrt(n.rx * n.rx + n.ry * n.ry);
+        const maxR = BASE_SPEED * 10;
+        if (rspd > maxR) { n.rx = (n.rx / rspd) * maxR; n.ry = (n.ry / rspd) * maxR; }
+
+        // Kick impulse: decay freely (no clamp — large but short-lived)
+        n.kx *= KICK_DECAY;
+        n.ky *= KICK_DECAY;
+
+        n.x += n.vx + n.rx + n.kx;
+        n.y += n.vy + n.ry + n.ky;
+        if (n.x < 0)  { n.x = 0;  n.vx =  Math.abs(n.vx); n.rx = 0; n.kx = 0; }
+        if (n.x > W)  { n.x = W;  n.vx = -Math.abs(n.vx); n.rx = 0; n.kx = 0; }
+        if (n.y < 0)  { n.y = 0;  n.vy =  Math.abs(n.vy); n.ry = 0; n.ky = 0; }
+        if (n.y > H)  { n.y = H;  n.vy = -Math.abs(n.vy); n.ry = 0; n.ky = 0; }
+      }
+
+      if (toRemove.size) {
+        const deadIds = new Set([...toRemove].map(i => nodes[i].id));
+        nodes = nodes.filter((_, i) => !toRemove.has(i));
+        for (const key of edgeMap.keys()) {
+          const [a, b] = key.split(',').map(Number);
+          if (deadIds.has(a) || deadIds.has(b)) edgeMap.delete(key);
+        }
+      }
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      const col   = getAccentColor();
+      const beatK = window._tetroBeat.kick;
+
+      // Edges — slightly thicker on kick
+      ctx.strokeStyle = col;
+      ctx.lineWidth   = 1.2 + beatK * 1.8;
+
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const dx = nodes[i].x - nodes[j].x, dy = nodes[i].y - nodes[j].y;
+          const d  = Math.sqrt(dx * dx + dy * dy);
+          const key = edgeKey(nodes[i], nodes[j]);
+          const targetA = d < EDGE_DIST
+            ? (1 - d / EDGE_DIST) * nodes[i].alpha * nodes[j].alpha
+            : 0;
+          const cur  = edgeMap.get(key) ?? 0;
+          const next = cur + (targetA - cur) * 0.04;
+          if (next < 0.004) { edgeMap.delete(key); continue; }
+          edgeMap.set(key, next);
+          ctx.globalAlpha = Math.min(1, next * (1 + beatK * 0.5));
+          ctx.beginPath();
+          ctx.moveTo(nodes[i].x, nodes[i].y);
+          ctx.lineTo(nodes[j].x, nodes[j].y);
+          ctx.stroke();
+        }
+      }
+
+      // Nodes — slightly larger on kick
+      ctx.fillStyle = col;
+      for (const n of nodes) {
+        ctx.globalAlpha = n.alpha * 0.85;
+        const r = n.r * (1 + beatK * 0.45);
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      ctx.globalAlpha = 1;
+    }
+
+    function loop() { update(); draw(); rafId = requestAnimationFrame(loop); }
+
+    window.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY + window.scrollY; });
+    window.addEventListener('mouseleave', () => { mouseX = -9999; mouseY = -9999; });
+
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        cancelAnimationFrame(rafId);
+        resize();
+        nodes.forEach(n => { n.x = Math.min(n.x, W); n.y = Math.min(n.y, H); });
+        reduceMotion ? draw() : loop();
+      }, 200);
+    });
+
+    resize();
+    initNodes();
+    if (reduceMotion) draw(); else loop();
+  })();
+  </script>
+
+  <!-- ============================================================
+       Audio players + reactive EQ + kick detection
+
+       Kick detection:
+       - fftSize 512 → 256 bins, ~86 Hz/bin at 44100 Hz
+       - Monitors bins 1–4 (~86–430 Hz) for kick transients
+       - Rolling 60-frame average as dynamic baseline
+       - Spike > 1.65× baseline with 220ms cooldown → kick event
+       - Writes window._tetroBeat.kick = 1.0; graph script decays it
+  ============================================================ -->
+  <script>
+  (function () {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // ---- Web Audio ----
+    let audioCtx  = null;
+    let analyser  = null;
+    let freqData  = null;
+    const sourceMap = new Map();
+
+    function ensureAudioContext() {
+      if (audioCtx) return;
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      analyser = audioCtx.createAnalyser();
+      analyser.fftSize              = 512;  // 256 bins — ~86 Hz/bin
+      analyser.smoothingTimeConstant = 0.72;
+      analyser.connect(audioCtx.destination);
+      freqData = new Uint8Array(analyser.frequencyBinCount); // 256
+    }
+
+    function connectAudio(audioEl) {
+      ensureAudioContext();
+      if (!sourceMap.has(audioEl)) {
+        const src = audioCtx.createMediaElementSource(audioEl);
+        src.connect(analyser);
+        sourceMap.set(audioEl, src);
+      }
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+    }
+
+    // ---- Kick detection state ----
+    const KICK_BINS      = [1, 2, 3, 4]; // ~86–430 Hz
+    const KICK_THRESH    = 1.6;          // spike must be this many × the floor
+    const KICK_DELTA_MIN = 8;            // onset: min frame-over-frame rise
+    const KICK_COOLDOWN  = 350;          // ms hard floor between triggers (~170 BPM max)
+    let   kickFloor      = 0;            // one-sided envelope: tracks inter-beat quiet level
+    let   lastKickTime   = 0;
+    let   prevKickEnergy = 0;
+
+    function detectKick() {
+      if (!analyser || !freqData) return;
+      analyser.getByteFrequencyData(freqData);
+
+      let energy = 0;
+      for (const b of KICK_BINS) energy += freqData[b];
+      energy /= KICK_BINS.length;
+
+      // Floor tracks DOWN fast (beat gaps pull it low) but rises very slowly
+      // so kick peaks never inflate the baseline
+      if (energy < kickFloor) {
+        kickFloor = kickFloor * 0.70 + energy * 0.30; // fast downward
+      } else {
+        kickFloor = kickFloor * 0.998 + energy * 0.002; // very slow upward
+      }
+
+      const delta = energy - prevKickEnergy;
+      prevKickEnergy = energy;
+
+      const now = performance.now();
+      if (energy > kickFloor * KICK_THRESH && kickFloor > 3
+          && delta > KICK_DELTA_MIN && now - lastKickTime > KICK_COOLDOWN) {
+        window._tetroBeat.seq++;
+        lastKickTime = now;
+        prevKickEnergy = 255; // Schmitt reset: force real drop before next trigger
+      }
+    }
+
+    // ---- EQ canvas ----
+    const eqCanvas = document.getElementById('eq-canvas');
+    const eqCtx    = eqCanvas.getContext('2d');
+    const visDot   = document.getElementById('vis-dot');
+    const BAR_COUNT = 32;
+    const BAR_GAP   = 3;
+
+    const idleBars = Array.from({ length: BAR_COUNT }, () => ({
+      phase: Math.random() * Math.PI * 2,
+      speed: 0.018 + Math.random() * 0.022,
+      base:  0.12 + Math.random() * 0.22,
+      range: 0.18 + Math.random() * 0.28,
+      cur:   0.15,
+    }));
+
+    let eqW, eqH, eqRafId, eqT = 0;
+    let isPlaying = false;
+
+    function resizeEq() {
+      const rect = eqCanvas.parentElement.getBoundingClientRect();
+      const dpr  = window.devicePixelRatio || 1;
+      eqW = eqCanvas.width  = rect.width  * dpr;
+      eqH = eqCanvas.height = rect.height * dpr;
+      eqCanvas.style.width  = rect.width  + 'px';
+      eqCanvas.style.height = rect.height + 'px';
+    }
+
+    function isDark() { return window.matchMedia('(prefers-color-scheme: dark)').matches; }
+
+    function drawEq() {
+      eqT++;
+      if (isPlaying) detectKick();
+
+      eqCtx.clearRect(0, 0, eqW, eqH);
+      const dpr  = window.devicePixelRatio || 1;
+      const barW = (eqW - (BAR_COUNT + 1) * BAR_GAP * dpr) / BAR_COUNT;
+
+      for (let i = 0; i < BAR_COUNT; i++) {
+        let frac;
+
+        if (isPlaying && analyser && freqData) {
+          // Map bar → frequency bin (spread across lower ~75% of spectrum)
+          const binIdx = Math.floor(i * (freqData.length * 0.75) / BAR_COUNT);
+          frac = freqData[binIdx] / 255;
+          idleBars[i].cur += (frac - idleBars[i].cur) * 0.25;
+          frac = idleBars[i].cur;
+        } else {
+          const b = idleBars[i];
+          const target = b.base + b.range * (0.5 + 0.5 * Math.sin(eqT * b.speed + b.phase));
+          b.cur += (target - b.cur) * 0.12 + (Math.random() - 0.5) * 0.007;
+          b.cur  = Math.max(0.04, Math.min(0.96, b.cur));
+          frac   = b.cur;
+        }
+
+        const bh = frac * eqH;
+        const x  = BAR_GAP * dpr + i * (barW + BAR_GAP * dpr);
+        const y  = eqH - bh;
+
+        const grad = eqCtx.createLinearGradient(0, y, 0, eqH);
+        if (isDark()) {
+          grad.addColorStop(0, 'rgba(201,169,110,0.88)');
+          grad.addColorStop(1, 'rgba(201,169,110,0.12)');
+        } else {
+          grad.addColorStop(0, 'rgba(139,26,26,0.78)');
+          grad.addColorStop(1, 'rgba(139,26,26,0.10)');
+        }
+
+        eqCtx.fillStyle = grad;
+        eqCtx.beginPath();
+        if (eqCtx.roundRect) eqCtx.roundRect(x, y, barW, bh, [2 * dpr, 2 * dpr, 0, 0]);
+        else eqCtx.rect(x, y, barW, bh);
+        eqCtx.fill();
+      }
+
+      eqRafId = requestAnimationFrame(drawEq);
+    }
+
+    window.addEventListener('resize', () => {
+      cancelAnimationFrame(eqRafId);
+      resizeEq();
+      if (!reduceMotion) eqRafId = requestAnimationFrame(drawEq);
+    });
+
+    resizeEq();
+    if (reduceMotion) { drawEq(); cancelAnimationFrame(eqRafId); }
+    else eqRafId = requestAnimationFrame(drawEq);
+
+    // ---- Player builder ----
+    let currentAudio = null;
+
+    function fmt(s) {
+      if (!isFinite(s)) return '0:00';
+      return `${Math.floor(s/60)}:${Math.floor(s%60).toString().padStart(2,'0')}`;
+    }
+
+    function updateSeekbarFill(sb) {
+      const pct    = sb.max > 0 ? (sb.value / sb.max) * 100 : 0;
+      const accent = isDark() ? '#c9a96e' : '#8b1a1a';
+      const bg     = isDark() ? '#3a3a3c' : '#d4d0ca';
+      sb.style.background = `linear-gradient(to right, ${accent} ${pct}%, ${bg} ${pct}%)`;
+    }
+
+    const PLAY_SVG  = `<svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>`;
+    const PAUSE_SVG = `<svg viewBox="0 0 24 24" fill="currentColor"><rect x="5" y="3" width="4" height="18"/><rect x="15" y="3" width="4" height="18"/></svg>`;
+
+    document.querySelectorAll('.track-item[data-src]').forEach(card => {
+      const src = card.dataset.src;
+
+      const audio   = document.createElement('audio');
+      audio.preload = 'metadata';
+      audio.src     = src;
+      card.appendChild(audio);
+
+      const player = document.createElement('div');
+      player.className = 'audio-player';
+      player.innerHTML = `
+        <button class="ap-btn" aria-label="Play">${PLAY_SVG}</button>
+        <div class="ap-progress-wrap">
+          <input type="range" class="ap-seekbar" min="0" max="0" value="0" step="0.01" aria-label="Seek">
+          <div class="ap-time">
+            <span class="ap-current">0:00</span>
+            <span class="ap-duration">--:--</span>
+          </div>
+        </div>
+      `;
+      card.appendChild(player);
+
+      const btn     = player.querySelector('.ap-btn');
+      const seekbar = player.querySelector('.ap-seekbar');
+      const curEl   = player.querySelector('.ap-current');
+      const durEl   = player.querySelector('.ap-duration');
+
+      updateSeekbarFill(seekbar);
+
+      audio.addEventListener('loadedmetadata', () => {
+        seekbar.max = audio.duration;
+        durEl.textContent = fmt(audio.duration);
+        updateSeekbarFill(seekbar);
+      });
+
+      audio.addEventListener('timeupdate', () => {
+        if (!audio.seeking) {
+          seekbar.value = audio.currentTime;
+          curEl.textContent = fmt(audio.currentTime);
+          updateSeekbarFill(seekbar);
+        }
+      });
+
+      audio.addEventListener('ended', () => {
+        btn.innerHTML = PLAY_SVG;
+        btn.setAttribute('aria-label', 'Play');
+        isPlaying = false;
+        visDot.classList.remove('active');
+      });
+
+      seekbar.addEventListener('input', () => {
+        audio.currentTime = seekbar.value;
+        curEl.textContent = fmt(audio.currentTime);
+        updateSeekbarFill(seekbar);
+      });
+
+      btn.addEventListener('click', () => {
+        if (currentAudio && currentAudio !== audio && !currentAudio.paused) {
+          currentAudio.pause();
+          currentAudio.dispatchEvent(new Event('_pausedbyother'));
+        }
+        if (audio.paused) {
+          connectAudio(audio);
+          audio.play().catch(() => {});
+          btn.innerHTML = PAUSE_SVG;
+          btn.setAttribute('aria-label', 'Pause');
+          currentAudio = audio;
+          isPlaying    = true;
+          visDot.classList.add('active');
+        } else {
+          audio.pause();
+          btn.innerHTML = PLAY_SVG;
+          btn.setAttribute('aria-label', 'Play');
+          isPlaying = false;
+          visDot.classList.remove('active');
+        }
+      });
+
+      audio.addEventListener('_pausedbyother', () => {
+        btn.innerHTML = PLAY_SVG;
+        btn.setAttribute('aria-label', 'Play');
+        audio.currentTime = 0;
+        seekbar.value = 0;
+        curEl.textContent = fmt(0);
+        updateSeekbarFill(seekbar);
+      });
+
+      audio.addEventListener('seeking', () => {
+        lastKickTime = performance.now() + 600;
+      });
+    });
+
+  })();
+  </script>
+
+  <!-- Active nav on scroll -->
+  <script>
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('nav.site-nav a[href^="#"]');
+    function onScroll() {
+      const NAV_H = 52; let c = '';
+      sections.forEach(s => { if (window.scrollY >= s.offsetTop - NAV_H - 32) c = s.getAttribute('id'); });
+      navLinks.forEach(a => { a.classList.toggle('active', a.getAttribute('href') === '#' + c); });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  </script>
+
+</body>
+</html>

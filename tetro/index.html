@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/png" href="../src/tetro.png">
+  <title>tetromino &mdash; discography</title>
+  <link rel="stylesheet" href="../src/style.css">
+  <style>
+    /* ---- Page header ---- */
+    .disco-header {
+      margin-bottom: 0.25rem;
+      text-align: center;
+    }
+    .disco-header h1 {
+      font-family: var(--font-mono);
+      font-size: 1.8rem;
+      font-weight: normal;
+      letter-spacing: 0.22em;
+      text-transform: lowercase;
+      color: var(--text);
+      text-shadow:
+        0 0 18px color-mix(in srgb, var(--accent) 30%, transparent),
+        0 0 40px color-mix(in srgb, var(--accent) 12%, transparent);
+    }
+    .disco-header .disco-sub {
+      font-size: 0.88rem;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      margin-top: 0.25rem;
+    }
+
+    /* ---- EQ strip ---- */
+    .visualizer-wrap {
+      margin: 1.8rem 0 2.2rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      background: var(--surface);
+      height: 72px;
+      position: relative;
+    }
+    #eq-canvas { width: 100%; height: 100%; display: block; }
+    .visualizer-label {
+      position: absolute;
+      bottom: 6px; right: 9px;
+      font-size: 0.65rem;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+      opacity: 0.45;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      pointer-events: none;
+    }
+    .vis-live-dot {
+      position: absolute;
+      top: 7px; right: 9px;
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--accent);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+    .vis-live-dot.active { opacity: 1; animation: pulse-dot 1.4s ease-in-out infinite; }
+    @keyframes pulse-dot {
+      0%, 100% { transform: scale(1);   opacity: 0.9; }
+      50%       { transform: scale(1.5); opacity: 0.4; }
+    }
+
+    /* ---- Release type sections ---- */
+    .release-type-section { margin-top: 2.8rem; }
+
+    /* ---- Release cards ---- */
+    .releases-list { display: flex; flex-direction: column; gap: 1.6rem; }
+
+    .release-card {
+      display: flex;
+      gap: 1.3rem;
+      padding: 1.2rem 1.3rem;
+      background: var(--surface);
+      border-left: 2px solid var(--accent);
+      border-radius: 0 4px 4px 0;
+    }
+    .release-card-art {
+      flex-shrink: 0;
+      width: 120px;
+      height: 120px;
+    }
+    .release-art-placeholder {
+      width: 100%; height: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .release-art-placeholder svg {
+      width: 56px; height: 56px;
+      color: var(--accent);
+      opacity: 0.22;
+    }
+    .release-card-art img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      border-radius: 3px;
+      border: 1px solid var(--border);
+      display: block;
+    }
+    .release-card-body { flex: 1; min-width: 0; }
+    .release-card-header {
+      display: flex;
+      align-items: baseline;
+      gap: 0.55rem;
+      margin-bottom: 0.4rem;
+      flex-wrap: wrap;
+    }
+    .release-type-badge {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.14em;
+      padding: 0.08rem 0.4rem;
+      border: 1px solid var(--accent);
+      border-radius: 2px;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+    .release-card-title {
+      font-style: italic;
+      font-size: 0.975rem;
+      font-weight: bold;
+    }
+    .release-card-year {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      margin-left: auto;
+    }
+    .release-card-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+      line-height: 1.6;
+    }
+
+    /* Tracks inside a release — compact */
+    .release-tracks { display: flex; flex-direction: column; gap: 0.5rem; }
+    .release-tracks .track-item {
+      padding: 0.5rem 0.8rem;
+      border-left: 1px solid var(--border);
+      background: var(--bg);
+      border-radius: 0 3px 3px 0;
+    }
+
+    /* ---- Standalone track items (Singles list) ---- */
+    .singles-list { display: flex; flex-direction: column; gap: 0.8rem; }
+
+    /* ---- Shared track anatomy ---- */
+    .track-item {
+      padding: 0.9rem 1.1rem;
+      border-left: 2px solid var(--accent);
+      background: var(--surface);
+      border-radius: 0 4px 4px 0;
+    }
+    .track-item.track-wip { border-left-color: var(--border); opacity: 0.76; }
+    .track-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.3rem;
+    }
+    .track-title { font-style: italic; font-size: 0.975rem; }
+    .track-meta  { font-size: 0.82rem; color: var(--text-muted); font-family: var(--font-mono); white-space: nowrap; }
+    .track-desc  { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 0.7rem; line-height: 1.6; }
+
+    /* ---- Genre pills ---- */
+    .tag-pill {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-family: var(--font-mono);
+      padding: 0.1rem 0.45rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+      margin-right: 0.3rem;
+    }
+
+    /* ---- Audio player ---- */
+    .audio-player {
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0.6rem 0.85rem;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      user-select: none;
+    }
+    .ap-btn {
+      flex-shrink: 0;
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: color 0.15s, border-color 0.15s;
+      padding: 0;
+    }
+    .ap-btn:hover { color: var(--accent); border-color: var(--accent); }
+    .ap-btn svg { width: 12px; height: 12px; }
+    .ap-progress-wrap {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.28rem;
+      min-width: 0;
+    }
+    .ap-seekbar {
+      width: 100%;
+      -webkit-appearance: none;
+      appearance: none;
+      height: 3px;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    .ap-seekbar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      cursor: pointer;
+      transition: transform 0.1s;
+    }
+    .ap-seekbar::-moz-range-thumb {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: none; cursor: pointer;
+    }
+    .ap-seekbar:hover::-webkit-slider-thumb { transform: scale(1.3); }
+    .ap-time {
+      font-size: 0.7rem;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* ---- WIP placeholder ---- */
+    .track-placeholder {
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      background: var(--bg);
+    }
+
+    @media (max-width: 600px) {
+      .release-card { flex-direction: column; }
+      .release-card-art { width: 100%; height: 80px; }
+      .release-art-placeholder { height: 80px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <canvas id="graph-bg" aria-hidden="true"></canvas>
+
+  <nav class="site-nav" aria-label="Site navigation">
+    <ul>
+      <li><a href="../music.html">← music</a></li>
+      <li><a href="#albums">Albums</a></li>
+      <li><a href="#eps">EPs</a></li>
+      <li><a href="#singles">Singles</a></li>
+    </ul>
+  </nav>
+
+  <main class="page">
+
+    <div class="disco-header">
+      <h1>tetromino</h1>
+      <p class="disco-sub">discography</p>
+    </div>
+
+    <div class="visualizer-wrap" aria-hidden="true">
+      <canvas id="eq-canvas"></canvas>
+      <span class="vis-live-dot" id="vis-dot"></span>
+      <span class="visualizer-label">tetromino</span>
+    </div>
+
+    <!-- ======================================================
+         HOW TO ADD RELEASES:
+
+         ALBUM / EP:
+           Copy a .release-card block into the relevant section.
+           Add .track-item[data-src] elements inside .release-tracks.
+           Set data-art="path/to/cover.jpg" on .release-card to show cover art
+           (replace the .release-art-placeholder div with an <img> inside .release-card-art).
+
+         SINGLE:
+           Add a .track-item[data-src] directly inside .singles-list.
+
+         AUDIO FILES:
+           Place compressed files in ../music/ (relative to this page).
+           e.g. data-src="../music/track-name.m4a"
+
+         WIP (no file yet):
+           Add .track-wip class to .track-item and use .track-placeholder instead of player.
+    ======================================================= -->
+
+    <!-- ======== Albums ======== -->
+    <!-- <section id="albums" class="release-type-section">
+      <div class="section-rule"><h2>Albums</h2></div>
+
+      <div class="releases-list"> -->
+
+        <!--
+        <div class="release-card">
+          <div class="release-card-art">
+            <div class="release-art-placeholder">
+              <svg viewBox="0 0 40 40" fill="currentColor" aria-hidden="true">
+                <rect x="4"  y="4"  width="15" height="15" rx="1"/>
+                <rect x="21" y="4"  width="15" height="15" rx="1"/>
+                <rect x="4"  y="21" width="15" height="15" rx="1"/>
+              </svg>
+            </div>
+          </div>
+          <div class="release-card-body">
+            <div class="release-card-header">
+              <span class="release-type-badge">ALBUM</span>
+              <span class="release-card-title">Album Title</span>
+              <span class="release-card-year">2025</span>
+            </div>
+            <p class="release-card-desc">
+              Album description. Themes, influences, production context.
+            </p>
+            <div class="release-tracks">
+
+              <div class="track-item" data-src="../music/track-01.m4a">
+                <div class="track-header">
+                  <span class="track-title">Track One</span>
+                  <span class="track-meta">01</span>
+                </div>
+              </div>
+
+              <div class="track-item" data-src="../music/track-02.m4a">
+                <div class="track-header">
+                  <span class="track-title">Track Two</span>
+                  <span class="track-meta">02</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        -->
+
+        <!-- <p style="font-size:0.88rem; color:var(--text-muted); font-family:var(--font-mono);">
+          [ actively working on a 2026 album ]
+        </p> -->
+
+      <!-- </div>
+    </section> -->
+
+    <!-- ======== EPs ======== -->
+    <section id="eps" class="release-type-section">
+      <div class="section-rule"><h2>EPs</h2></div>
+
+      <div class="releases-list">
+
+        
+        <div class="release-card">
+          <div class="release-card-art">
+            <div class="release-art-placeholder">
+              <!-- <svg viewBox="0 0 40 40" fill="currentColor" aria-hidden="true">
+                <rect x="4"  y="4"  width="15" height="15" rx="1"/>
+                <rect x="21" y="4"  width="15" height="15" rx="1"/>
+                <rect x="4"  y="21" width="15" height="15" rx="1"/>
+              </svg> -->
+              <img src="../music/Entropy/entropy.png">
+            </div>
+          </div>
+          <div class="release-card-body">
+            <div class="release-card-header">
+              <span class="release-type-badge">EP</span>
+              <span class="release-card-title">Entropy</span>
+              <span class="release-card-year">2026</span>
+            </div>
+            <p class="release-card-desc">
+              the irreversible rhythm of everything scattering into the unknown<br>
+              <span class="tag-pill">progressive house</span>
+              <span class="tag-pill">128</span>
+              <span class="tag-pill">Am</span>
+            </p>
+            <div class="release-tracks">
+
+              <div class="track-item" data-src="../music/Entropy/Original Mix.m4a">
+                <div class="track-header">
+                  <span class="track-title">Entropy - Original Mix</span>
+                  <!-- <span class="track-meta">A1</span> -->
+                </div>
+              </div>
+
+              <div class="track-item" data-src="../music/Entropy/Club Edit.m4a">
+                <div class="track-header">
+                  <span class="track-title">Entropy - Club Edit</span>
+                  <!-- <span class="track-meta">A2</span> -->
+                </div>
+              </div>
+
+              <div class="track-item" data-src="../music/Entropy/Acoustic Mix.m4a">
+                <div class="track-header">
+                  <span class="track-title">Entropy - Acoustic Mix</span>
+                  <!-- <span class="track-meta">B1</span> -->
+                </div>
+              </div>
+
+              <div class="track-item" data-src="../music/Entropy/Piano Acoustic.m4a">
+                <div class="track-header">
+                  <span class="track-title">Entropy - Piano Acoustic</span>
+                  <!-- <span class="track-meta">B1</span> -->
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+       
+<!-- 
+        <p style="font-size:0.88rem; color:var(--text-muted); font-family:var(--font-mono);">
+          [ no EPs yet &mdash; uncomment a block above to add one ]
+        </p> -->
+
+      </div>
+    </section>
+
+    <!-- ======== Singles ======== -->
+    <section id="singles" class="release-type-section">
+      <div class="section-rule"><h2>Singles</h2></div>
+
+      <div class="singles-list">
+
+        <!-- Single with file -->
+        <div class="track-item" data-src="../music/Seatbelt (Instrumental Mix).m4a">
+          <div class="track-header">
+            <span class="track-title">Seatbelt (Instrumental Mix) [Demo]</span>
+            <span class="track-meta">2026</span>
+          </div>
+          <div class="track-desc">
+            Demo track<br>
+            <span class="tag-pill">progressive house</span>
+            <span class="tag-pill">128</span>
+            <span class="tag-pill">Am</span>
+          </div>
+        </div>
+
+        <div class="track-item" data-src="../music/Amsterdam.wav">
+          <div class="track-header">
+            <span class="track-title">Amsterdam</span>
+            <span class="track-meta">2025</span>
+          </div>
+          <div class="track-desc">
+            <span class="tag-pill">electronic</span>
+            <span class="tag-pill">downtempo</span>
+            <span class="tag-pill">116</span>
+            <span class="tag-pill">Am</span>
+          </div>
+        </div>
+
+        <!--
+        Add more singles here. Copy a .track-item block above.
+        For a single with no file yet, use .track-wip + .track-placeholder:
+
+        <div class="track-item track-wip">
+          <div class="track-header">
+            <span class="track-title">Untitled</span>
+            <span class="track-meta">in progress</span>
+          </div>
+          <div class="track-desc">Description.<br>
+            <span class="tag-pill">tag</span>
+          </div>
+          <div class="track-placeholder">[ coming soon ]</div>
+        </div>
+        -->
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <small>
+      &copy; 2026 tetromino / Neelam Akula &nbsp;&middot;&nbsp;
+      <a href="../music.html" style="color:var(--text-muted); text-decoration:none;">music page</a>
+      &nbsp;&middot;&nbsp;
+      <a href="../index.html" style="color:var(--text-muted); text-decoration:none;">main site</a>
+    </small>
+  </footer>
+
+  <!-- Shared beat state -->
+  <script> window._tetroBeat = { kick: 0, seq: 0 }; </script>
+
+  <!-- Graph background (kick-reactive) — same as music.html, paths unchanged -->
+  <script>
+  (function () {
+    const canvas = document.getElementById('graph-bg');
+    const ctx    = canvas.getContext('2d');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const TARGET_NODES=140,EDGE_DIST=300,BASE_SPEED=0.28,MIN_LIFE=1800,MAX_LIFE=3600,
+          FADE_FRAMES=90,REPEL_RADIUS=120,REPEL_FORCE=2.8,REPEL_DECAY=0.88,
+          KICK_IMPULSE=10,KICK_DECAY=0.82,KICK_VIS_DECAY=0.80;
+    let W,H,nodes=[],rafId,nodeIdCounter=0,mouseX=-9999,mouseY=-9999,lastKickSeq=0;
+    function getAccentColor(){return window.matchMedia('(prefers-color-scheme: dark)').matches?'#e8d5a3':'#8a6a6a';}
+    function resize(){W=canvas.width=window.innerWidth;H=canvas.height=Math.max(document.documentElement.scrollHeight,document.body.scrollHeight,window.innerHeight);}
+    function spawnNode(x,y){const a=Math.random()*Math.PI*2,s=(0.5+Math.random()*0.8)*BASE_SPEED;return{id:nodeIdCounter++,x:x??Math.random()*W,y:y??Math.random()*H,vx:Math.cos(a)*s,vy:Math.sin(a)*s,rx:0,ry:0,kx:0,ky:0,r:Math.random()*2+1.4,age:0,maxAge:MIN_LIFE+Math.random()*(MAX_LIFE-MIN_LIFE),alpha:0};}
+    function initNodes(){nodes=[];for(let i=0;i<TARGET_NODES;i++){const n=spawnNode();n.age=Math.random()*n.maxAge;n.alpha=1;nodes.push(n);}}
+    const edgeMap=new Map();
+    function edgeKey(a,b){return a.id<b.id?`${a.id},${b.id}`:`${b.id},${a.id}`;}
+    function update(){
+      if(!reduceMotion){const d=TARGET_NODES-nodes.length;if(d>0&&Math.random()<Math.min(0.85,d*0.03))nodes.push(spawnNode());}
+      const beat=window._tetroBeat;
+      if(beat.seq!==lastKickSeq){lastKickSeq=beat.seq;beat.kick=1.0;for(const n of nodes){const a=Math.random()*Math.PI*2;n.kx+=Math.cos(a)*KICK_IMPULSE;n.ky+=Math.sin(a)*KICK_IMPULSE;}}
+      if(beat.kick>0.01)beat.kick*=KICK_VIS_DECAY;else beat.kick=0;
+      const cx=W/2,cy=window.scrollY+window.innerHeight/2;
+      const rem=new Set();
+      for(let i=0;i<nodes.length;i++){const n=nodes[i];n.age++;
+        if(n.age<FADE_FRAMES)n.alpha=n.age/FADE_FRAMES;
+        else if(n.age>n.maxAge-FADE_FRAMES)n.alpha=Math.max(0,(n.maxAge-n.age)/FADE_FRAMES);
+        else n.alpha=1;
+        if(n.age>=n.maxAge){rem.add(i);continue;}
+        const rdx=n.x-mouseX,rdy=n.y-mouseY,rd=Math.sqrt(rdx*rdx+rdy*rdy);
+        if(rd<REPEL_RADIUS&&rd>0.01){const f=(1-rd/REPEL_RADIUS)*REPEL_FORCE;n.rx+=(rdx/rd)*f;n.ry+=(rdy/rd)*f;}
+        n.rx*=REPEL_DECAY;n.ry*=REPEL_DECAY;
+        const rs=Math.sqrt(n.rx*n.rx+n.ry*n.ry),mr=BASE_SPEED*10;
+        if(rs>mr){n.rx=(n.rx/rs)*mr;n.ry=(n.ry/rs)*mr;}
+        n.kx*=KICK_DECAY;n.ky*=KICK_DECAY;
+        n.x+=n.vx+n.rx+n.kx;n.y+=n.vy+n.ry+n.ky;
+        if(n.x<0){n.x=0;n.vx=Math.abs(n.vx);n.rx=0;n.kx=0;}if(n.x>W){n.x=W;n.vx=-Math.abs(n.vx);n.rx=0;n.kx=0;}
+        if(n.y<0){n.y=0;n.vy=Math.abs(n.vy);n.ry=0;n.ky=0;}if(n.y>H){n.y=H;n.vy=-Math.abs(n.vy);n.ry=0;n.ky=0;}}
+      if(rem.size){const di=new Set([...rem].map(i=>nodes[i].id));nodes=nodes.filter((_,i)=>!rem.has(i));for(const k of edgeMap.keys()){const[a,b]=k.split(',').map(Number);if(di.has(a)||di.has(b))edgeMap.delete(k);}}}
+    function draw(){ctx.clearRect(0,0,W,H);const col=getAccentColor(),beatK=window._tetroBeat.kick;
+      ctx.strokeStyle=col;ctx.lineWidth=1.2+beatK*1.8;
+      for(let i=0;i<nodes.length;i++)for(let j=i+1;j<nodes.length;j++){const dx=nodes[i].x-nodes[j].x,dy=nodes[i].y-nodes[j].y,d=Math.sqrt(dx*dx+dy*dy),key=edgeKey(nodes[i],nodes[j]),ta=d<EDGE_DIST?(1-d/EDGE_DIST)*nodes[i].alpha*nodes[j].alpha:0,cur=edgeMap.get(key)??0,next=cur+(ta-cur)*0.04;if(next<0.004){edgeMap.delete(key);continue;}edgeMap.set(key,next);ctx.globalAlpha=Math.min(1,next*(1+beatK*0.5));ctx.beginPath();ctx.moveTo(nodes[i].x,nodes[i].y);ctx.lineTo(nodes[j].x,nodes[j].y);ctx.stroke();}
+      ctx.fillStyle=col;for(const n of nodes){ctx.globalAlpha=n.alpha*0.85;const r=n.r*(1+beatK*0.45);ctx.beginPath();ctx.arc(n.x,n.y,r,0,Math.PI*2);ctx.fill();}ctx.globalAlpha=1;}
+    function loop(){update();draw();rafId=requestAnimationFrame(loop);}
+    window.addEventListener('mousemove',e=>{mouseX=e.clientX;mouseY=e.clientY+window.scrollY;});
+    window.addEventListener('mouseleave',()=>{mouseX=-9999;mouseY=-9999;});
+    let rt;window.addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{cancelAnimationFrame(rafId);resize();nodes.forEach(n=>{n.x=Math.min(n.x,W);n.y=Math.min(n.y,H);});reduceMotion?draw():loop();},200);});
+    resize();initNodes();if(reduceMotion)draw();else loop();
+  })();
+  </script>
+
+  <!-- Audio players + EQ + kick detection -->
+  <script>
+  (function () {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    let audioCtx=null,analyser=null,freqData=null;
+    const sourceMap=new Map();
+
+    function ensureAudioContext(){
+      if(audioCtx)return;
+      audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+      analyser=audioCtx.createAnalyser();
+      analyser.fftSize=512;
+      analyser.smoothingTimeConstant=0.72;
+      analyser.connect(audioCtx.destination);
+      freqData=new Uint8Array(analyser.frequencyBinCount);
+    }
+    function connectAudio(el){
+      ensureAudioContext();
+      if(!sourceMap.has(el)){const s=audioCtx.createMediaElementSource(el);s.connect(analyser);sourceMap.set(el,s);}
+      if(audioCtx.state==='suspended')audioCtx.resume();
+    }
+
+    const KICK_BINS=[1,2,3,4],KICK_THRESH=1.6,KICK_DELTA_MIN=8,KICK_COOLDOWN=350;
+    let kickFloor=0,lastKickTime=0,prevKickEnergy=0;
+    function detectKick(){
+      if(!analyser||!freqData)return;
+      analyser.getByteFrequencyData(freqData);
+      let e=0;for(const b of KICK_BINS)e+=freqData[b];e/=KICK_BINS.length;
+      if(e<kickFloor)kickFloor=kickFloor*0.70+e*0.30;else kickFloor=kickFloor*0.998+e*0.002;
+      const delta=e-prevKickEnergy;prevKickEnergy=e;
+      const now=performance.now();
+      if(e>kickFloor*KICK_THRESH&&kickFloor>3&&delta>KICK_DELTA_MIN&&now-lastKickTime>KICK_COOLDOWN){window._tetroBeat.seq++;lastKickTime=now;prevKickEnergy=255;}
+    }
+
+    const eqCanvas=document.getElementById('eq-canvas'),eqCtx=eqCanvas.getContext('2d');
+    const visDot=document.getElementById('vis-dot');
+    const BAR_COUNT=32,BAR_GAP=3;
+    const idleBars=Array.from({length:BAR_COUNT},()=>({phase:Math.random()*Math.PI*2,speed:0.018+Math.random()*0.022,base:0.12+Math.random()*0.22,range:0.18+Math.random()*0.28,cur:0.15}));
+    let eqW,eqH,eqRafId,eqT=0,isPlaying=false;
+
+    function resizeEq(){const rect=eqCanvas.parentElement.getBoundingClientRect(),dpr=window.devicePixelRatio||1;eqW=eqCanvas.width=rect.width*dpr;eqH=eqCanvas.height=rect.height*dpr;eqCanvas.style.width=rect.width+'px';eqCanvas.style.height=rect.height+'px';}
+    function isDark(){return window.matchMedia('(prefers-color-scheme: dark)').matches;}
+
+    function drawEq(){
+      eqT++;if(isPlaying)detectKick();
+      eqCtx.clearRect(0,0,eqW,eqH);
+      const dpr=window.devicePixelRatio||1,barW=(eqW-(BAR_COUNT+1)*BAR_GAP*dpr)/BAR_COUNT;
+      for(let i=0;i<BAR_COUNT;i++){
+        let frac;
+        if(isPlaying&&analyser&&freqData){const bi=Math.floor(i*(freqData.length*0.75)/BAR_COUNT);frac=freqData[bi]/255;idleBars[i].cur+=(frac-idleBars[i].cur)*0.25;frac=idleBars[i].cur;}
+        else{const b=idleBars[i],t=b.base+b.range*(0.5+0.5*Math.sin(eqT*b.speed+b.phase));b.cur+=(t-b.cur)*0.12+(Math.random()-0.5)*0.007;b.cur=Math.max(0.04,Math.min(0.96,b.cur));frac=b.cur;}
+        const bh=frac*eqH,x=BAR_GAP*dpr+i*(barW+BAR_GAP*dpr),y=eqH-bh;
+        const grad=eqCtx.createLinearGradient(0,y,0,eqH);
+        if(isDark()){grad.addColorStop(0,'rgba(201,169,110,0.88)');grad.addColorStop(1,'rgba(201,169,110,0.12)');}
+        else{grad.addColorStop(0,'rgba(139,26,26,0.78)');grad.addColorStop(1,'rgba(139,26,26,0.10)');}
+        eqCtx.fillStyle=grad;eqCtx.beginPath();
+        if(eqCtx.roundRect)eqCtx.roundRect(x,y,barW,bh,[2*dpr,2*dpr,0,0]);else eqCtx.rect(x,y,barW,bh);
+        eqCtx.fill();
+      }
+      eqRafId=requestAnimationFrame(drawEq);
+    }
+
+    window.addEventListener('resize',()=>{cancelAnimationFrame(eqRafId);resizeEq();if(!reduceMotion)eqRafId=requestAnimationFrame(drawEq);});
+    resizeEq();if(reduceMotion){drawEq();cancelAnimationFrame(eqRafId);}else eqRafId=requestAnimationFrame(drawEq);
+
+    let currentAudio=null;
+    function fmt(s){if(!isFinite(s))return'0:00';return`${Math.floor(s/60)}:${Math.floor(s%60).toString().padStart(2,'0')}`;}
+    function fill(sb){const pct=sb.max>0?(sb.value/sb.max)*100:0,accent=isDark()?'#c9a96e':'#8b1a1a',bg=isDark()?'#3a3a3c':'#d4d0ca';sb.style.background=`linear-gradient(to right,${accent} ${pct}%,${bg} ${pct}%)`;}
+    const PLAY=`<svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>`;
+    const PAUSE=`<svg viewBox="0 0 24 24" fill="currentColor"><rect x="5" y="3" width="4" height="18"/><rect x="15" y="3" width="4" height="18"/></svg>`;
+
+    document.querySelectorAll('.track-item[data-src]').forEach(card=>{
+      const src=card.dataset.src;
+      const audio=document.createElement('audio');audio.preload='metadata';audio.src=src;card.appendChild(audio);
+      const player=document.createElement('div');player.className='audio-player';
+      player.innerHTML=`<button class="ap-btn" aria-label="Play">${PLAY}</button><div class="ap-progress-wrap"><input type="range" class="ap-seekbar" min="0" max="0" value="0" step="0.01" aria-label="Seek"><div class="ap-time"><span class="ap-current">0:00</span><span class="ap-duration">--:--</span></div></div>`;
+      card.appendChild(player);
+      const btn=player.querySelector('.ap-btn'),sb=player.querySelector('.ap-seekbar'),cur=player.querySelector('.ap-current'),dur=player.querySelector('.ap-duration');
+      fill(sb);
+      audio.addEventListener('loadedmetadata',()=>{sb.max=audio.duration;dur.textContent=fmt(audio.duration);fill(sb);});
+      audio.addEventListener('timeupdate',()=>{if(!audio.seeking){sb.value=audio.currentTime;cur.textContent=fmt(audio.currentTime);fill(sb);}});
+      audio.addEventListener('ended',()=>{btn.innerHTML=PLAY;btn.setAttribute('aria-label','Play');isPlaying=false;visDot.classList.remove('active');});
+      sb.addEventListener('input',()=>{audio.currentTime=sb.value;cur.textContent=fmt(audio.currentTime);fill(sb);});
+      btn.addEventListener('click',()=>{
+        if(currentAudio&&currentAudio!==audio&&!currentAudio.paused){currentAudio.pause();currentAudio.dispatchEvent(new Event('_pausedbyother'));}
+        if(audio.paused){connectAudio(audio);audio.play().catch(()=>{});btn.innerHTML=PAUSE;btn.setAttribute('aria-label','Pause');currentAudio=audio;isPlaying=true;visDot.classList.add('active');}
+        else{audio.pause();btn.innerHTML=PLAY;btn.setAttribute('aria-label','Play');isPlaying=false;visDot.classList.remove('active');}
+      });
+      audio.addEventListener('_pausedbyother',()=>{btn.innerHTML=PLAY;btn.setAttribute('aria-label','Play');audio.currentTime=0;sb.value=0;cur.textContent=fmt(0);fill(sb);});
+      audio.addEventListener('seeking',()=>{lastKickTime=performance.now()+600;});
+    });
+  })();
+  </script>
+
+  <!-- Active nav on scroll -->
+  <script>
+    const sections=document.querySelectorAll('section[id]');
+    const navLinks=document.querySelectorAll('nav.site-nav a[href^="#"]');
+    function onScroll(){const N=52;let c='';sections.forEach(s=>{if(window.scrollY>=s.offsetTop-N-32)c=s.getAttribute('id');});navLinks.forEach(a=>{a.classList.toggle('active',a.getAttribute('href')==='#'+c);});}
+    window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+  </script>
+
+</body>
+</html>
